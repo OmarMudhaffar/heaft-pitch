@@ -121,8 +121,8 @@
   .three{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2cqw;margin-top:1cqh}
   .card{background:#fff;border:1px solid var(--hi);border-radius:1.8cqw;padding:2.8cqh 2cqw;display:flex;flex-direction:column;gap:1.3cqh}
   .card .ico{width:5.6cqw;height:5.6cqw;border-radius:1.6cqw;background:var(--ground);display:grid;place-items:center;font-size:2.9cqw;line-height:1}
-  .card .h{font-family:var(--sora);font-weight:700;font-size:2cqw;line-height:1.15}
-  .card .p{font-size:1.45cqw;line-height:1.5;color:var(--t2)}
+  .card{padding:3.2cqh 2cqw;gap:1.4cqh;justify-content:flex-start}
+  .three .rline{font-size:2.4cqw}
 
   /* 02 what it does — the phone plays the product while the matching
      feature lights up, so the slide demos itself instead of listing bullets */
@@ -212,12 +212,12 @@
 
   /* 07 roles */
   .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:1.3cqw;margin-top:.4cqh}
-  .roles.four{grid-template-columns:repeat(4,1fr);gap:1.8cqw}
-  .roles.four .role{padding:2.4cqh 1.5cqw}
-  .roles.four .role .ico{width:4.6cqw;height:4.6cqw;border-radius:1.35cqw;font-size:2.4cqw}
-  .roles.four .role .h{font-size:1.95cqw}
-  .roles.four .role .p{font-size:1.75cqw;line-height:1.35;color:var(--t2);margin-top:.4cqh}
-  .roles.four .role .p b{color:var(--t1);font-weight:800}
+  .roles.four{grid-template-columns:repeat(4,1fr);gap:1.8cqw;align-items:stretch}
+  .roles.four .role{padding:3.2cqh 1.8cqw;gap:1.4cqh;justify-content:flex-start}
+  .roles.four .role .ico{width:5.4cqw;height:5.4cqw;border-radius:1.6cqw;font-size:2.9cqw}
+  .rlabel{font-family:var(--mono);font-size:1.08cqw;letter-spacing:.18em;text-transform:uppercase;color:var(--t3)}
+  .rline{font-family:var(--sora);font-weight:700;font-size:2.15cqw;line-height:1.22;color:var(--t2);text-wrap:balance}
+  .rline b{color:var(--t1);font-weight:800}
   .roles.four .role .you b{font-size:1.05cqw}
   .role{background:#fff;border:1px solid var(--hi);border-radius:1.6cqw;padding:2cqh 1.2cqw;display:flex;flex-direction:column;gap:.8cqh}
   .role .ico{width:4cqw;height:4cqw;border-radius:1.2cqw;display:grid;place-items:center;font-size:2.1cqw}
@@ -379,9 +379,9 @@
       <div class="eyebrow a-up">So we skip the arguing</div>
       <h2 class="big a-up d1">How do we turn this into <span class="mark">a real company?</span></h2>
       <div class="three">
-        <div class="card card3d a-3d d5"><div class="ico ico3d">👟</div><div class="h">Real users</div><div class="p">A real gym. Not a demo.</div></div>
-        <div class="card card3d a-3d d6"><div class="ico ico3d">💳</div><div class="h">Real money</div><div class="p">Who pays, and why.</div></div>
-        <div class="card card3d a-3d d7"><div class="ico ico3d">🚀</div><div class="h">Real launch</div><div class="p">Public, in three weeks.</div></div>
+        <div class="card card3d a-3d d5"><div class="ico ico3d">👟</div><div class="rlabel">Users</div><div class="rline">In a real gym. <b>Not a demo.</b></div></div>
+        <div class="card card3d a-3d d6"><div class="ico ico3d">💳</div><div class="rlabel">Money</div><div class="rline">Who pays, <b>and why.</b></div></div>
+        <div class="card card3d a-3d d7"><div class="ico ico3d">🚀</div><div class="rlabel">Launch</div><div class="rline">Public, in <b>three weeks.</b></div></div>
       </div>
       <p class="lede a-up d8">That is the interesting part.</p>
     </div>
@@ -396,23 +396,23 @@
       <div class="roles four">
         <div class="role ux card3d a-3d d2">
           <div class="ico ico3d">🎨</div>
-          <div class="h">Interaction design</div>
-          <div class="p">You own how it <b>feels.</b></div>
+          <div class="rlabel">Interaction design</div>
+          <div class="rline">You own how it <b>feels.</b></div>
         </div>
         <div class="role dev card3d a-3d d3">
           <div class="ico ico3d">💻</div>
-          <div class="h">Computer science</div>
-          <div class="p">You own how it is <b>built.</b></div>
+          <div class="rlabel">Computer science</div>
+          <div class="rline">You own how it is <b>built.</b></div>
         </div>
         <div class="role data card3d a-3d d4">
           <div class="ico ico3d">📊</div>
-          <div class="h">Data science</div>
-          <div class="p">You own what we <b>learn.</b></div>
+          <div class="rlabel">Data science</div>
+          <div class="rline">You own what we <b>learn.</b></div>
         </div>
         <div class="role biz card3d a-3d d5">
           <div class="ico ico3d">🚀</div>
-          <div class="h">Entrepreneurship</div>
-          <div class="p">You own who <b>uses it.</b></div>
+          <div class="rlabel">Entrepreneurship</div>
+          <div class="rline">You own who <b>uses it.</b></div>
         </div>
       </div>
     </div>
