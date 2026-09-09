@@ -540,8 +540,14 @@
 
   if (LIVE) {
     var es = new EventSource(PATH);
-    var dot = document.getElementById('rdot');
-    es.onopen  = function(){ if (dot) dot.classList.remove('off'); };
+    var dot = document.getElementById('rdot'), claimed = false;
+    // Opening the deck claims the room and resets it to the cover, so a slide
+    // number left over from a previous run can never strand the next viewer.
+    // A reconnect mid-talk does not reset — it just follows what is stored.
+    es.onopen  = function(){
+      if (dot) dot.classList.remove('off');
+      if (!REMOTE && !claimed) { claimed = true; push(cur); }
+    };
     es.onerror = function(){ if (dot) dot.classList.add('off'); };
     es.addEventListener('put', function(ev){
       try {
