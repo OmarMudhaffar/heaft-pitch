@@ -228,6 +228,23 @@
   .closewrap .right{height:72cqh}
   .live .closewrap .right .phone{animation:float 4s ease-in-out 1s infinite}
 
+  /* ── phones ────────────────────────────────────────────────────────────
+     A 16:9 slide on a portrait phone would be a stamp, so the deck drops its
+     chrome and turns the slide sideways to use the whole screen. Landscape
+     needs no rotation, just the full height. Tap anywhere to advance. */
+  @media (max-width: 900px){
+    body:not(.remote) .bar,body:not(.remote) .track{display:none}
+    body:not(.remote) .frame{padding:0}
+    body:not(.remote) .stage{border-radius:0;box-shadow:none;
+      width:min(100%, calc(100vh * 16 / 9));max-width:none}
+  }
+  @media (max-width: 900px) and (orientation: portrait){
+    body:not(.remote) .stage{position:fixed;top:50%;left:50%;
+      width:min(100vh, calc(100vw * 16 / 9));
+      height:calc(min(100vh, calc(100vw * 16 / 9)) * 9 / 16);
+      transform:translate(-50%, -50%) rotate(90deg);transform-origin:center}
+  }
+
   /* ── phone remote ──────────────────────────────────────────────────────
      Two tap zones and a status dot. Nothing to read, so it works without
      looking down. The deck still runs on its own if the link drops. */
@@ -259,8 +276,8 @@
 
 <div class="bar">
   <strong>HEAFT · PITCH</strong><span class="sep"></span><span id="lbl">COVER</span>
-  <span class="spacer"></span><span class="hint">← → to move · N notes · F fullscreen</span>
-  <button id="btnNotes" aria-pressed="false">Notes</button><button id="btnFull">Full</button>
+  <span class="spacer"></span><span class="hint">← → or click to move · F fullscreen</span>
+  <button id="btnFull">Full</button>
 </div>
 <div class="track"><span id="prog" style="width:0%"></span></div>
 
@@ -472,9 +489,6 @@
   <span class="dot off" id="rdot"></span>
 </div>
 
-<div class="notes" id="notes" hidden>
-  <div class="meta" id="nmeta"></div><p class="say" id="nsay"></p><p class="ar" id="nar"></p><p class="do" id="ndo"></p>
-</div>
 
 <!-- Paste your Firebase Realtime Database URL between the quotes to turn the
      phone remote on. Leave it empty and the deck still works on its own. -->
@@ -482,43 +496,10 @@
 
 <script>
 (function () {
-  var NOTES = [
-    { m: 'Cover · 2 seconds of silence, then',
-      say: 'Hi, I\'m Omar. This is Heaft: a personal coach in your pocket. Not a slide idea. It\'s on my phone right now.',
-      ar: 'أهلاً، أنا عمر. هذا Heaft: مدرب شخصي في جيبك. ليس فكرة على شريحة، هو على هاتفي الآن.',
-      d: 'Phone unlocked on the home map. Hold it up once.' },
-    { m: 'Slide 1 · 25 s · the idea',
-      say: 'Most of us here like sport. Very few of us keep a plan. It dies in a Downloads folder, nobody tracks anything, and a real coach costs more than our food budget. <em>Heaft puts that coach in your phone.</em>',
-      ar: 'معظمنا هنا يحب الرياضة، وقليل منا يلتزم بخطة. الخطة في ملف PDF، لا أحد يتابعها، والمدرب الحقيقي أغلى من ميزانية الأكل. Heaft يضع هذا المدرب في هاتفك.',
-      d: 'Let the three cards land before you speak the last line.' },
-    { m: 'Slide 2 · 30 s · what it does',
-      say: 'You tell your coach your goal. It builds your plan in thirty seconds. It runs your session: you log the set, the rest timer starts itself. It sets your food targets from your steps and your workout. And your friends are in it: streaks and records. <em>Everything on this screen is the real app, recorded today.</em>',
-      ar: 'تخبره بهدفك، فيبني خطتك في ثلاثين ثانية. يدير جلستك: تسجّل السيت والمؤقت يبدأ وحده. يحدد أهداف أكلك من خطواتك وتمرينك. وأصدقاؤك فيه: سلسلة أيام، دوري، وذهب.',
-      d: 'One sentence per tile. Point at the phone for "runs your session".' },
-    { m: 'Slide 3 · 20 s · why it works',
-      say: 'Here is why it is different from a notes app. Everything you do becomes data, and every week the plan, the weights and the food move with you. <em>It learns you.</em>',
-      ar: 'هذا سبب اختلافه عن تطبيق ملاحظات: كل ما تفعله يتحول إلى بيانات، وكل أسبوع الخطة والأوزان والأكل تتحرك معك. إنه يتعلّمك.',
-      d: 'Trace the ring with a finger: plan, train, data, adapt.' },
-    { m: 'Slide 4 · 20 s · where we are',
-      say: 'The hard part is built. In the next three weeks we launch it: we train with it ourselves and with twenty students, fix what hurts, then go public. <em>We are actually publishing this</em> — and I cannot do that part alone.',
-      ar: 'النسخة الأولى جاهزة. خلال ثلاثة أسابيع ننطلق: نتدرب به بأنفسنا ومع عشرين طالباً، نصلح ما يزعج، ثم نطلقه. لا أستطيع فعل هذا الجزء وحدي.',
-      d: 'Watch the green bar fill, then say the last line flat.' },
-    { m: 'Slide 5 · 45 s · the ask',
-      say: 'These are the lanes. Take the one that fits you — and if two of you want the same lane, that is fine. A QA tester who comes to the gym with me and breaks it before users do — and learns test cases, ClickUp and how to write an SRS. An entrepreneur who finds the users and sells it. A designer who owns how it feels, and learns what a design system actually is. A developer who ships next to me and learns architecture, CI/CD and prompt engineering — <em>how not to be just a vibe coder.</em> And a data analyst who reads everything the app logs. Each of you leaves with something real.',
-      ar: 'هذه هي المسارات. اختر ما يناسبك، وإن أراد اثنان المسار نفسه فلا مشكلة. مختبر جودة يأتي معي إلى النادي ويكسر التطبيق قبل المستخدمين، ويتعلّم كتابة حالات الاختبار وClickUp وتوثيق الـSRS. رائد أعمال يجد المستخدمين ويبيع. مصمم يملك الإحساس ويتعلّم ما هو نظام التصميم فعلاً. مطوّر يبني معي ويتعلّم معمارية الأنظمة وCI/CD وهندسة الأوامر — كيف لا يكون مجرد vibe coder. ومحلل بيانات يقرأ كل ما يسجّله التطبيق. كل واحد يخرج بشيء حقيقي.',
-      d: 'Slowest slide. One breath after each lane. Never say a team size — you have not decided one.' },
-    { m: 'Slide 6 · 25 s · credibility, say it flat',
-      say: 'And one thing about me, so you know who you would be doing that with. I am a software engineer with seven years in the industry. I have built large-scale government systems in Iraq. <em>They are still running today, and they serve millions of requests.</em> So you will work the way a real product team works — tickets, sprints, specs, code review, deploys. Whatever part of that you have not done yet, I teach you.',
-      ar: 'وشيء عني، لتعرفوا مع من ستعملون: أنا مهندس برمجيات بخبرة سبع سنوات في الشركات. بنيت أنظمة حكومية كبيرة في العراق، ما زالت تعمل حتى اليوم وتخدم ملايين الطلبات. لذلك ستعملون كما يعمل فريق منتج حقيقي: مهام، سبرنتات، وثائق، مراجعة كود، ونشر. وأي جزء لم تجربوه بعد، سأعلّمكم إياه.',
-      d: 'Say the three numbers slowly. No boasting tone — flat and factual.' },
-    { m: 'Slide 7 · 10 s · close',
-      say: 'Want to build the coach with me? Install it tonight, train with it tomorrow, tell me what is wrong. That is how you join. No CV needed — my LinkedIn is on the screen. Thank you.',
-      ar: 'تريد أن تبني المدرب معي؟ ثبّته الليلة، تدرّب به غداً، وقل لي ما الخطأ. هكذا تنضم. شكراً.',
-      d: 'Stop. Stay on the slide while people write the email down.' }
-  ];
+  var NOTES = [];
   var slides = [].slice.call(document.querySelectorAll('.slide')), cur = 0;
-  var elLbl = document.getElementById('lbl'), elProg = document.getElementById('prog'), notes = document.getElementById('notes');
-  var btnNotes = document.getElementById('btnNotes'), btnFull = document.getElementById('btnFull');
+  var elLbl = document.getElementById('lbl'), elProg = document.getElementById('prog');
+  var btnFull = document.getElementById('btnFull');
   function show(i) {
     cur = Math.max(0, Math.min(slides.length - 1, i));
     slides.forEach(function (s, n) { s.hidden = n !== cur; s.classList.remove('live'); });
@@ -526,20 +507,14 @@
     var cover = slides[cur].dataset.cover === '1';
     elLbl.textContent = cover ? 'COVER' : ('SLIDE ' + cur + '/' + (slides.length - 1));
     elProg.style.width = (cur / (slides.length - 1) * 100) + '%';
-    var n = NOTES[cur] || {};
-    document.getElementById('nmeta').textContent = n.m || '';
-    document.getElementById('nsay').innerHTML = n.say || '';
-    document.getElementById('nar').textContent = n.ar || '';
-    document.getElementById('ndo').textContent = n.d || '';
   }
   document.getElementById('stage').addEventListener('click', function () { show(cur + 1); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(cur + 1); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(cur - 1); }
     else if (e.key === 'Home') show(0); else if (e.key === 'End') show(slides.length - 1);
-    else if (e.key === 'n' || e.key === 'N') btnNotes.click(); else if (e.key === 'f' || e.key === 'F') btnFull.click();
+    else if (e.key === 'f' || e.key === 'F') btnFull.click();
   });
-  btnNotes.addEventListener('click', function () { var on = notes.hidden; notes.hidden = !on; btnNotes.setAttribute('aria-pressed', String(on)); });
   btnFull.addEventListener('click', function () { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); });
   show(0);
 
