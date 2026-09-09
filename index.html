@@ -229,33 +229,22 @@
   .live .closewrap .right .phone{animation:float 4s ease-in-out 1s infinite}
 
   /* ── phone remote ──────────────────────────────────────────────────────
-     Same file, two roles: the laptop shows the deck and listens; the phone
-     shows this and drives. Everything still works with no connection. */
+     Two tap zones and a status dot. Nothing to read, so it works without
+     looking down. The deck still runs on its own if the link drops. */
+  body.remote{display:block;overflow:hidden}
   body.remote .bar,body.remote .track,body.remote .frame,body.remote .notes{display:none!important}
   .rc{display:none}
-  body.remote{display:block;overflow:hidden}
-  body.remote .rc,body.remote .rc *{box-sizing:border-box;max-width:100%}
-  body.remote .rc{display:flex;flex-direction:column;width:100%;height:100dvh;background:#0B0E14;color:#E9EDF5;
-    font-family:var(--inter);overflow:hidden;
-    padding:calc(env(safe-area-inset-top) + 4px) 16px calc(env(safe-area-inset-bottom) + 4px)}
-  .rc p,.rc .lab{overflow-wrap:anywhere;min-width:0}
-  .rc .top{display:flex;align-items:center;gap:10px;padding:14px 2px 10px;font-family:var(--mono);
-    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#8C93A6;border-bottom:1px solid #1A2130}
-  .rc .dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
-  .rc .dot.off{background:#4A5568;box-shadow:none}
-  .rc .pos{margin-left:auto;color:#F2F4F8}
-  .rc .body{flex:1;min-height:0;overflow-y:auto;padding:16px 2px;-webkit-overflow-scrolling:touch}
-  .rc .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:10px}
-  .rc .say{font-size:1.12rem;line-height:1.55;margin:0 0 14px}
-  .rc .say em{font-style:normal;color:var(--mint)}
-  .rc .ar{font-family:var(--ar);direction:rtl;text-align:right;font-size:1rem;line-height:1.95;color:#9AA3B4;margin:0 0 14px}
-  .rc .do{font-family:var(--mono);font-size:.78rem;line-height:1.7;color:#8C93A6;margin:0;padding-left:10px;border-left:2px solid #232C3D}
-  .rc .btns{display:grid;grid-template-columns:1fr 2fr;gap:10px;padding:10px 0 16px}
-  .rc button{-webkit-tap-highlight-color:transparent;border:0;border-radius:16px;padding:22px 0;width:100%;font-family:var(--sora);
-    font-weight:800;font-size:1.15rem;cursor:pointer}
-  .rc .prev{background:#18202E;color:#C6CEDB}
-  .rc .next{background:var(--mint);color:#06351F}
-  .rc button:active{transform:scale(.97)}
+  body.remote .rc,body.remote .rc *{box-sizing:border-box}
+  body.remote .rc{display:grid;grid-template-rows:1fr 22vh;gap:12px;width:100%;height:100dvh;
+    background:#0B0E14;padding:calc(env(safe-area-inset-top) + 12px) 12px calc(env(safe-area-inset-bottom) + 12px)}
+  .rc button{-webkit-tap-highlight-color:transparent;border:0;border-radius:22px;width:100%;height:100%;
+    font-family:var(--sora);font-weight:800;cursor:pointer;display:grid;place-items:center;line-height:1}
+  .rc .next{background:var(--mint);color:#06351F;font-size:22vw;box-shadow:0 8px 0 var(--mint-deep)}
+  .rc .prev{background:#18202E;color:#7C889B;font-size:9vw}
+  .rc button:active{transform:translateY(4px);box-shadow:none}
+  .rc .dot{position:fixed;top:calc(env(safe-area-inset-top) + 20px);right:22px;width:11px;height:11px;
+    border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);z-index:2}
+  .rc .dot.off{background:#3B475A;box-shadow:none}
 
   /* notes */
   .notes{border-top:1px solid #141927;background:#090C14;padding:13px 20px 17px;display:flex;flex-direction:column;gap:8px}
@@ -478,9 +467,9 @@
 </div></div>
 
 <div class="rc" id="rc">
-  <div class="top"><span class="dot off" id="rdot"></span><span id="rstate">offline</span><span class="pos" id="rpos"></span></div>
-  <div class="body"><div class="lab" id="rlab"></div><p class="say" id="rsay"></p><p class="ar" id="rar"></p><p class="do" id="rdo"></p></div>
-  <div class="btns"><button class="prev" id="rprev">←</button><button class="next" id="rnext">Next →</button></div>
+  <button class="next" id="rnext" aria-label="Next slide">&rarr;</button>
+  <button class="prev" id="rprev" aria-label="Previous slide">&larr;</button>
+  <span class="dot off" id="rdot"></span>
 </div>
 
 <div class="notes" id="notes" hidden>
@@ -570,23 +559,15 @@
     if (!LIVE || muted) return;
     fetch(PATH, {method:'PUT', body: JSON.stringify(i)}).catch(function(){});
   }
-  function paint(){
-    if (!REMOTE) return;
-    var n = NOTES[cur] || {};
-    document.getElementById('rpos').textContent = cur === 0 ? 'cover' : (cur + ' / ' + (slides.length-1));
-    document.getElementById('rlab').textContent = n.m || '';
-    document.getElementById('rsay').innerHTML   = n.say || '';
-    document.getElementById('rar').textContent  = n.ar || '';
-    document.getElementById('rdo').textContent  = n.d || '';
-  }
+  function paint(){}   // the remote shows buttons only
   var _show = show;
   show = function(i){ _show(i); paint(); push(cur); };
 
   if (LIVE) {
     var es = new EventSource(PATH);
-    var dot = document.getElementById('rdot'), st = document.getElementById('rstate');
-    es.onopen  = function(){ if (dot){ dot.classList.remove('off'); st.textContent = 'live'; } };
-    es.onerror = function(){ if (dot){ dot.classList.add('off');    st.textContent = 'reconnecting'; } };
+    var dot = document.getElementById('rdot');
+    es.onopen  = function(){ if (dot) dot.classList.remove('off'); };
+    es.onerror = function(){ if (dot) dot.classList.add('off'); };
     es.addEventListener('put', function(ev){
       try {
         var d = JSON.parse(ev.data);
