@@ -1,5 +1,6 @@
 # Heaft — pitch deck
 
-Live: https://omarmudhaffar.github.io/heaft-pitch/
+Live: https://omarmudhaffar.github.io/heaft-pitch/next/
 
-Arrow keys or click to move · **N** presenter notes · **F** fullscreen
+Arrow keys or click to move · **F** fullscreen
+Phone remote: add `#remote` to the URL.
