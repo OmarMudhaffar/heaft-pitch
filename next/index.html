@@ -306,6 +306,8 @@
   .chips{display:flex;flex-wrap:wrap;gap:1cqw;margin-top:.6cqh}
   .chip{font-family:var(--mono);font-size:1.32cqw;padding:1.3cqh 1.5cqw;border-radius:1.2cqw;
     background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none}
+  /* the site is the product, not another inbox — give it the brand colour */
+  .chip.site{background:rgba(31,217,138,.14);border-color:rgba(31,217,138,.55);color:var(--mint);font-weight:500}
 
   /* ── phone remote ──────────────────────────────────────────────────────
      Two tap zones and a status dot. Nothing to read, so it works without
@@ -468,6 +470,7 @@
           <a class="chip" href="https://instagram.com/omar.tsx" target="_blank" rel="noopener">@omar.tsx</a>
           <a class="chip" href="https://www.linkedin.com/in/omarmudhaffar/" target="_blank" rel="noopener">in/omarmudhaffar</a>
           <a class="chip" href="mailto:omarmudhaffar@gmail.com">omarmudhaffar@gmail.com</a>
+          <a class="chip site" href="https://heaft.app" target="_blank" rel="noopener">heaft.app</a>
         </div>
       </div>
       <div class="right pablo a-pop d3">
