@@ -508,7 +508,16 @@
     elLbl.textContent = cover ? 'COVER' : ('SLIDE ' + cur + '/' + (slides.length - 1));
     elProg.style.width = (cur / (slides.length - 1) * 100) + '%';
   }
-  document.getElementById('stage').addEventListener('click', function () { show(cur + 1); });
+  // Tap to move, and where you tap decides the direction. In portrait the
+  // slide is turned sideways, so its start is at the top of the screen —
+  // there "back" is the top edge, not the left one.
+  document.addEventListener('click', function (e) {
+    if (document.body.classList.contains('remote')) return;
+    if (e.target.closest && e.target.closest('button, a')) return;
+    var turned = window.matchMedia('(max-width: 900px) and (orientation: portrait)').matches;
+    var back   = turned ? (e.clientY < innerHeight * 0.28) : (e.clientX < innerWidth * 0.28);
+    show(cur + (back ? -1 : 1));
+  });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(cur + 1); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(cur - 1); }
