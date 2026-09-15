@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Heaft market study: segmentation, TAM/SAM/SOM, competitors and prices, unit economics.">
+<title>Heaft Market Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+  /* ── Olympic plate palette (the app's own tokens, gym_theme.dart) ─────── */
+  :root{
+    --red:#E0424B; --red-deep:#B21F28; --plate25:#CE2E38;
+    --plate20:#3A7BD5; --plate15:#F0B323; --plate10:#2FA36B;
+    --slate:#646B7C; --slate-mid:#8A93A6;
+    --red-soft:#F7D8DA; --red-dim:rgba(224,66,75,.12);
+    --bg:#FFFFFF; --ground:#F0F2F4; --hi:#DDE1E6; --line:#E6E9ED;
+    --t1:#0E1013; --t2:#616B75; --t3:#8794A0;
+    --sora:"Sora",system-ui,sans-serif; --inter:"Inter",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+    color-scheme:light;
+  }
+  body{background:#0B0E14;color:var(--t1);font-family:var(--inter);-webkit-font-smoothing:antialiased;min-height:100vh;margin:0;display:flex;flex-direction:column}
+  [hidden]{display:none!important}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* chrome */
+  .bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:9px 18px;border-bottom:1px solid #141927;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:#8C93A6}
+  .bar strong{color:#F2F4F8;font-weight:500}.bar .sep{width:1px;height:13px;background:#1C2233}
+  .bar button{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;background:transparent;color:#8C93A6;border:1px solid #1C2233;cursor:pointer;border-radius:8px}
+  .bar button:hover{color:#F2F4F8;border-color:#2E3650}
+  .bar button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .bar button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+  .spacer{flex:1}.hint{color:#5C6376}
+  .bar a.lnk{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;color:#F2F4F8;border:1px solid var(--red);border-radius:8px;text-decoration:none;background:rgba(224,66,75,.14)}
+  .bar a.lnk:hover{background:var(--red)}
+  @media (max-width:760px){.hint{display:none}.frame{padding:8px}.stage{width:100%}.phonehint{display:block}}
+  .phonehint{display:none;font-family:var(--mono);font-size:.7rem;color:#C9CEDA;text-align:center;padding:10px 16px;background:#141927}
+  .phonehint a{color:#fff}
+  .track{height:2px;background:#141927}.track span{display:block;height:100%;background:var(--red);transition:width .25s ease}
+
+  /* stage */
+  .frame{flex:1;display:grid;place-items:center;padding:18px;min-height:0}
+  .stage{position:relative;width:min(100%,calc((100vh - 172px)*16/9));aspect-ratio:16/9;container-type:size;background:var(--bg);color:var(--t1);overflow:hidden;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.7);cursor:pointer}
+  .slide{position:absolute;inset:0;overflow:hidden}
+  .pad{position:absolute;inset:11cqh 7cqw 14.5cqh;display:flex;flex-direction:column;gap:1.8cqh}
+  .pad > *{min-height:0}
+  .grow{flex:1;min-height:0;display:flex;flex-direction:column}
+  .slug{position:absolute;top:3.6cqh;left:7cqw;display:flex;align-items:center;gap:1cqw;font-family:var(--mono);font-size:1.15cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--t2);z-index:2}
+  .slug svg{width:2cqw;height:2cqw}
+  .num{position:absolute;top:3.6cqh;right:7cqw;font-family:var(--mono);font-size:1.15cqw;letter-spacing:.2em;color:var(--t3);z-index:2}
+  .eyebrow{font-family:var(--mono);font-size:1.25cqw;letter-spacing:.24em;text-transform:uppercase;color:var(--red-deep)}
+  h2{font-family:var(--sora);font-weight:800;font-size:4.1cqw;line-height:1.05;letter-spacing:-0.03em;margin:0;text-wrap:balance;max-width:30ch}
+  h2 .mark{color:var(--red-deep)}
+  .lede{font-size:1.75cqw;line-height:1.4;color:var(--t2);max-width:60ch;margin:0}
+  .src{position:absolute;left:7cqw;right:7cqw;bottom:3.2cqh;font-family:var(--mono);font-size:.92cqw;line-height:1.5;color:var(--t3);letter-spacing:.01em;border-top:1px solid var(--line);padding-top:1cqh;display:flex;gap:2cqw;justify-content:space-between}
+  .src b{color:var(--t2);font-weight:500}
+  .dark{background:var(--t1);color:#fff}
+  .dark .slug,.dark .num,.dark .lede{color:rgba(255,255,255,.62)}.dark .eyebrow,.dark h2 .mark{color:var(--red)}
+  .dark .src{border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.5)}.dark .src b{color:rgba(255,255,255,.75)}
+
+  /* cover */
+  .cover .pad{justify-content:center;gap:3cqh;inset:11cqh 7cqw 12cqh}
+  .lockup{display:flex;align-items:center;gap:2.2cqw}
+  .lockup svg{width:9cqw;height:9cqw;border-radius:2cqw;background:var(--t1);flex:none}
+  .wordmark{font-family:var(--sora);font-weight:800;font-size:9cqw;line-height:.9;letter-spacing:.06em;margin:0}
+  .cover .tag{font-family:var(--sora);font-weight:700;font-size:3cqw;line-height:1.15;margin:0;letter-spacing:-.02em;max-width:26ch}
+  .cover .meta{position:absolute;left:7cqw;right:7cqw;bottom:3.4cqh;display:flex;justify-content:space-between;gap:2cqw;flex-wrap:wrap;font-family:var(--mono);font-size:1.15cqw;letter-spacing:.16em;text-transform:uppercase;color:var(--t2);border-top:1px solid var(--line);padding-top:1.6cqh}
+
+  /* stat row */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4cqw;margin-top:1cqh}
+  .stat .fig{font-family:var(--sora);font-weight:800;font-size:6.2cqw;line-height:1;letter-spacing:-.04em;color:var(--red-deep);font-variant-numeric:tabular-nums}
+  .stat .fig small{font-size:.5em;letter-spacing:0}
+  .stat .h{font-family:var(--sora);font-weight:700;font-size:1.65cqw;line-height:1.25;margin-top:1cqh}
+  .stat .p{font-size:1.3cqw;line-height:1.4;color:var(--t2);margin-top:.6cqh}
+
+  /* segments grid */
+  .segs{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4cqw;flex:1;min-height:0}
+  .seg{border:1px solid var(--line);border-radius:1.2cqw;padding:1.5cqh 1.4cqw;display:flex;flex-direction:column;gap:.7cqh;background:var(--bg)}
+  .seg.primary{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+  .seg .rank{font-family:var(--mono);font-size:.95cqw;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);display:flex;align-items:center;gap:.6cqw}
+  .seg .rank i{width:.9cqw;height:.9cqw;border-radius:50%;background:var(--hi)}
+  .seg.primary .rank{color:var(--red-deep)}.seg.primary .rank i{background:var(--red)}
+  .seg .h{font-family:var(--sora);font-weight:800;font-size:1.65cqw;line-height:1.12}
+  .seg .q{font-size:1.2cqw;line-height:1.35;color:var(--t2);font-style:italic}
+  .seg .f{margin-top:auto;font-family:var(--mono);font-size:.9cqw;letter-spacing:.04em;color:var(--t3);line-height:1.4}
+
+  /* persona strip */
+  .persona{display:flex;align-items:center;gap:1.4cqw;padding:1.2cqh 1.6cqw;border-radius:1.2cqw;background:var(--ground)}
+  .persona .av{width:3.6cqw;height:3.6cqw;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-family:var(--sora);font-weight:800;font-size:1.6cqw;flex:none}
+  .persona .who{font-family:var(--sora);font-weight:700;font-size:1.45cqw}
+  .persona .say{font-size:1.25cqw;line-height:1.35;color:var(--t2)}
+
+  /* two-column */
+  .cols{display:grid;grid-template-columns:1.1fr 1fr;gap:3cqw;flex:1;min-height:0;align-items:center}
+  .cols.eq{grid-template-columns:1fr 1fr}
+
+  /* TAM SAM SOM rings */
+  .rings{position:relative;height:100%;min-height:0;display:grid;place-items:center}
+  .rings svg{width:100%;height:100%;max-height:62cqh}
+  .ring-list{display:flex;flex-direction:column;gap:1.6cqh}
+  .ring-list .row{display:grid;grid-template-columns:1.2cqw 1fr;gap:1.2cqw;align-items:start}
+  .ring-list .row i{width:1.2cqw;height:1.2cqw;border-radius:50%;margin-top:.9cqh}
+  .ring-list .k{font-family:var(--mono);font-size:1cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+  .ring-list .v{font-family:var(--sora);font-weight:800;font-size:3.2cqw;line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .ring-list .d{font-size:1.2cqw;line-height:1.4;color:var(--t2);margin-top:.3cqh}
+
+  /* math strip */
+  .math{display:flex;flex-wrap:wrap;gap:.8cqw 1.2cqw;align-items:center;font-family:var(--mono);font-size:1.05cqw;color:var(--t2);padding:1.1cqh 1.4cqw;border-radius:1cqw;background:var(--ground)}
+  .math b{color:var(--t1);font-weight:700}
+  .math .op{color:var(--t3)}
+
+  /* tables */
+  table.t{width:100%;border-collapse:collapse;font-size:1.22cqw;line-height:1.3;font-variant-numeric:tabular-nums}
+  table.t th{font-family:var(--mono);font-weight:500;font-size:.92cqw;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);text-align:left;padding:.7cqh .9cqw;border-bottom:1px solid var(--hi)}
+  table.t td{padding:.85cqh .9cqw;border-bottom:1px solid var(--line);vertical-align:middle}
+  table.t td.n,table.t th.n{text-align:right}
+  table.t td .name{font-weight:600}
+  table.t td .sub{display:block;font-size:.95cqw;color:var(--t3);margin-top:.2cqh}
+  table.t tr.us td{background:var(--red-dim);font-weight:600}
+  table.t tr.us td:first-child{border-left:.35cqw solid var(--red);border-radius:.4cqw 0 0 .4cqw}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.85cqw;letter-spacing:.1em;text-transform:uppercase;padding:.25cqh .7cqw;border-radius:99px;background:var(--ground);color:var(--t2);white-space:nowrap}
+  .pill.coach{background:#E3F0FF;color:#1F4E8C}.pill.log{background:var(--ground);color:var(--t2)}.pill.human{background:#FFF3D6;color:#7A5300}.pill.gen{background:#E2F5EA;color:#1D6B44}
+
+  /* matrix */
+  table.m{width:100%;border-collapse:separate;border-spacing:0;font-size:1.15cqw;line-height:1.25}
+  table.m th{font-family:var(--sora);font-weight:700;font-size:1.05cqw;text-align:center;padding:.6cqh .5cqw;color:var(--t2);border-bottom:1px solid var(--hi)}
+  table.m th:first-child{text-align:left}
+  table.m th.us{color:var(--red-deep)}
+  table.m td{padding:.7cqh .6cqw;border-bottom:1px solid var(--line);text-align:center}
+  table.m td:first-child{text-align:left;font-weight:600}
+  table.m td.us{background:var(--red-dim)}
+  .mk-y{display:inline-grid;place-items:center;width:1.7cqw;height:1.7cqw;border-radius:50%;background:var(--plate10);color:#fff;font-size:1cqw;font-weight:700}
+  .mk-n{display:inline-block;width:1.2cqw;height:.22cqw;border-radius:2px;background:var(--hi);vertical-align:middle}
+  .mk-h{display:inline-grid;place-items:center;width:1.7cqw;height:1.7cqw;border-radius:50%;background:var(--plate15);color:#3a2b00;font-size:.9cqw;font-weight:700}
+  .keys{display:flex;gap:1.6cqw;font-family:var(--mono);font-size:.9cqw;color:var(--t3);align-items:center;flex-wrap:wrap}
+  .keys span{display:flex;align-items:center;gap:.5cqw}
+
+  /* cards row */
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw;flex:1;min-height:0}
+  .cards.three{grid-template-columns:repeat(3,1fr)}
+  .card{border:1px solid var(--line);border-radius:1.2cqw;padding:1.6cqh 1.4cqw;display:flex;flex-direction:column;gap:.8cqh}
+  .card .k{font-family:var(--mono);font-size:.95cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--red-deep)}
+  .card .h{font-family:var(--sora);font-weight:800;font-size:1.7cqw;line-height:1.12}
+  .card .p{font-size:1.2cqw;line-height:1.4;color:var(--t2)}
+  .card .ev{margin-top:auto;font-family:var(--mono);font-size:.9cqw;line-height:1.45;color:var(--t3);border-top:1px solid var(--line);padding-top:.8cqh}
+  .card .ev b{color:var(--t2);font-weight:500}
+
+  /* charts */
+  .chart{flex:1;min-height:0;display:flex;flex-direction:column}
+  .chart svg{width:100%;height:100%;overflow:visible}
+  .chart text{font-family:var(--inter);font-size:12px;fill:var(--t2)}
+  .chart text.v{font-family:var(--mono);font-size:11.5px;fill:var(--t1);font-weight:500}
+  .chart text.lab{fill:var(--t1);font-weight:600;font-size:12.5px}
+  .chart text.ax{font-family:var(--mono);font-size:10.5px;fill:var(--t3);letter-spacing:.12em;text-transform:uppercase}
+  .chart .grid{stroke:var(--line);stroke-width:1}
+  .chart .axis{stroke:var(--hi);stroke-width:1}
+  .legend{display:flex;gap:1.8cqw;flex-wrap:wrap;font-family:var(--mono);font-size:.95cqw;color:var(--t2);align-items:center}
+  .legend span{display:flex;align-items:center;gap:.5cqw}
+  .legend i{width:1cqw;height:1cqw;border-radius:.25cqw;display:inline-block}
+
+  /* unit-economics bars */
+  .ue{display:grid;grid-template-columns:1fr 1fr;gap:2.2cqw;flex:1;min-height:0}
+  .ubox{border:1px solid var(--line);border-radius:1.2cqw;padding:1.6cqh 1.6cqw;display:flex;flex-direction:column;gap:1cqh}
+  .ubox.us{border-color:var(--red)}
+  .ubox .k{font-family:var(--mono);font-size:1cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+  .ubox .big{font-family:var(--sora);font-weight:800;font-size:4.6cqw;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+  .ubox .big small{font-size:.38em;color:var(--t2);letter-spacing:0;margin-left:.3cqw;font-weight:600}
+  .ubox .sub{font-size:1.2cqw;color:var(--t2);line-height:1.35}
+  .lines{display:flex;flex-direction:column;gap:.55cqh;font-size:1.15cqw;font-variant-numeric:tabular-nums;margin-top:.4cqh}
+  .lines .l{display:grid;grid-template-columns:1fr auto;gap:1cqw;padding:.45cqh 0;border-bottom:1px dashed var(--line);color:var(--t2)}
+  .lines .l b{font-family:var(--mono);font-weight:500;color:var(--t1)}
+  .lines .l.tot{border-bottom:0;border-top:1px solid var(--hi);color:var(--t1);font-weight:700;padding-top:.8cqh}
+  .lines .l.tot b{font-weight:700;color:var(--red-deep)}
+  .waterfall{display:flex;align-items:flex-end;gap:1.2cqw;height:100%;min-height:0}
+
+  /* notes */
+  .notes{border-top:1px solid #141927;padding:12px 18px 14px;display:grid;grid-template-columns:1fr;gap:6px;color:#C9CEDA;font-size:.9rem;line-height:1.5;max-height:26vh;overflow:auto}
+  .notes .m{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#8C93A6}
+  .notes em{color:#fff;font-style:normal;font-weight:600}
+</style>
+</head><body>
+
+<div class="bar" role="toolbar" aria-label="Deck controls">
+  <strong>Heaft · Market Study</strong><span class="sep"></span>
+  <span id="lbl">COVER</span><span class="spacer"></span>
+  <button id="btnNotes" aria-pressed="false">Notes (N)</button>
+  <button id="btnFull">Fullscreen (F)</button><a class="lnk" href="speech.html">Speech &amp; notes</a><a class="lnk" href="Heaft-Market-Study.pdf">PDF</a>
+  <span class="hint">← → to move · click the slide</span>
+</div>
+<div class="track"><span id="prog" style="width:0"></span></div>
+<div class="phonehint">On a phone? Open the <a href="speech.html">speech page</a>: every slide as an image, with the words to say.</div>
+
+<div class="frame"><div class="stage" id="stage">
+
+<!-- ═══════════ COVER ═══════════ -->
+<section class="slide cover" data-cover="1">
+  <div class="pad">
+    <div class="lockup">
+      <svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#fff"/><circle cx="512" cy="512" r="29" fill="#0E1013"/></svg>
+      <h1 class="wordmark">HEAFT</h1>
+    </div>
+    <p class="tag">Market study: who we serve, who we fight, and what one user costs.</p>
+    <p class="lede">Segmentation · TAM / SAM / SOM · competitors and prices · unit economics · why the category has no leader yet.</p>
+  </div>
+  <div class="meta"><span>HTE401 · From Zero to Hero</span><span>Harbour.Space · Barcelona</span><span>September 2026</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> The gap</div>
+  <div class="num">01 / 13</div>
+  <div class="pad" style="justify-content:center">
+    <div class="eyebrow">Why a market exists</div>
+    <h2>Most new members quit before month three. A coach fixes that. Almost nobody can afford one.</h2>
+    <div class="stats">
+      <div class="stat"><div class="fig">63<small>%</small></div><div class="h">of new gym members quit before month 3</div><div class="p">Fewer than 4% are still going after a year. One in three members leaves every year.</div></div>
+      <div class="stat"><div class="fig">54<small>%</small></div><div class="h">of beginners do not know where to start</div><div class="p">Half say the weights area intimidates them.</div></div>
+      <div class="stat"><div class="fig">€35<small>–40 /h</small></div><div class="h">for a personal trainer in Barcelona</div><div class="p">Two sessions a week is €280+ a month. The gym itself averages €38.</div></div>
+    </div>
+    <p class="lede" style="margin-top:1cqh">The apps people already own log what happened. Nobody tells a beginner what to do next.</p>
+  </div>
+  <div class="src"><span><b>Sources</b> Sperandei, Vieira &amp; Reis 2016, J Sci Med Sport (n=5,240) · HFA 2025 Benchmarking Report (66.4% retention) · Les Mills 2026 Global Fitness Report · roeis.es Barcelona PT rates 2026 · Deloitte / España Activa, Informe del sector del fitness en España 2025 (€38.2 / month)</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Segmentation</div>
+  <div class="num">02 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Who we serve first</div>
+    <h2>We segment by the <span class="mark">problem</span>, not by age.</h2>
+    <div class="segs">
+      <div class="seg primary"><div class="rank"><i></i>Primary</div><div class="h">Beginners who need direction</div><div class="q">"I joined a gym, but I do not know what to do."</div><div class="f">Program builder · goal setup · coach questions</div></div>
+      <div class="seg primary"><div class="rank"><i></i>Primary</div><div class="h">People who start and stop</div><div class="q">"I get motivated, then I lose the routine."</div><div class="f">Streaks · daily goals · friends · rankings</div></div>
+      <div class="seg"><div class="rank"><i></i>Secondary</div><div class="h">Casual users juggling apps</div><div class="q">"My workouts and my food are in different apps."</div><div class="f">Training + fuel + coach in one</div></div>
+      <div class="seg"><div class="rank"><i></i>Secondary</div><div class="h">Motivated by competition</div><div class="q">"I train more when friends join."</div><div class="f">League · crews · step goals</div></div>
+      <div class="seg"><div class="rank"><i></i>Secondary</div><div class="h">Nutrition-first users</div><div class="q">"I need an easier way to track food."</div><div class="f">Meal photo · macros · hydration</div></div>
+      <div class="seg"><div class="rank"><i></i>Later</div><div class="h">Experienced lifters</div><div class="q">"I need precise programming and analysis."</div><div class="f">Volume analytics · plan import</div></div>
+    </div>
+    <div class="persona"><div class="av">A</div><div><div class="who">Alex, 23 · student in Barcelona · new gym member</div><div class="say">"Give me a clear plan and help me keep following it." Illustrative persona, not an interviewed customer. First test: 15 interviews in Barcelona.</div></div></div>
+  </div>
+  <div class="src"><span><b>Source</b> HEAFT Market Segmentation (team document, Sep 2026). Segments are hypotheses until the interviews confirm them.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Market size</div>
+  <div class="num">03 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">TAM · SAM · SOM · built from gym members, not from analyst hype</div>
+    <h2>Europe is a <span class="mark">$3 billion</span> market. Spain is our first <span class="mark">$280 million</span>.</h2>
+    <div class="cols">
+      <div class="rings">
+        <svg viewBox="0 0 420 330" style="max-height:48cqh" role="img" aria-label="Nested rings: TAM $3.0B Europe, SAM $282M Spain, SOM $1.1M year three. Not to scale.">
+          <circle cx="210" cy="170" r="158" fill="#F0F2F4" stroke="#DDE1E6" stroke-width="1.5"/>
+          <circle cx="210" cy="228" r="100" fill="#E3F0FF" stroke="#3A7BD5" stroke-width="1.5"/>
+          <circle cx="210" cy="280" r="48" fill="#E0424B"/>
+          <text x="210" y="40" text-anchor="middle" style="font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:2px;fill:#8794A0">TAM · EUROPE</text>
+          <text x="210" y="80" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;font-size:38px;fill:#0E1013">$3.0B</text>
+          <text x="210" y="102" text-anchor="middle" style="font-size:12.5px;fill:#616B75">75.5M gym members × $40 a year</text>
+          <text x="210" y="152" text-anchor="middle" style="font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:2px;fill:#1F4E8C">SAM · SPAIN</text>
+          <text x="210" y="188" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;font-size:32px;fill:#0E1013">$282M</text>
+          <text x="210" y="208" text-anchor="middle" style="font-size:12px;fill:#616B75">7.05M members · 2.75M join each year</text>
+          <text x="210" y="272" text-anchor="middle" style="font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:2px;fill:#fff">SOM · YEAR 3</text>
+          <text x="210" y="298" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;font-size:22px;fill:#fff">$1.1M</text>
+          <text x="210" y="313" text-anchor="middle" style="font-size:10px;fill:#fff">27,500 paying users</text>
+        </svg>
+      </div>
+      <div class="ring-list" style="gap:1.2cqh">
+        <div class="row"><i style="background:#DDE1E6"></i><div><div class="k">TAM · every gym member in Europe</div><div class="v">$3.0B <small style="font-size:.45em;color:var(--t3);letter-spacing:0">/ year</small></div><div class="d">75.5M members × $39.94, the median annual fitness-app price. Top-down check: Europe is 26% of the $12.3B global market = $3.2B.</div></div></div>
+        <div class="row"><i style="background:#3A7BD5"></i><div><div class="k">SAM · Spain, where we can reach and observe users</div><div class="v">$282M</div><div class="d">7.05M members, 16.5% of adults. 39% are new each year: 2.75M beginners. Barcelona alone has 733k members.</div></div></div>
+        <div class="row"><i style="background:#E0424B"></i><div><div class="k">SOM · what we can win by year 3</div><div class="v">$1.1M</div><div class="d">1% of Spain's yearly new joiners paying = 27,500 subscribers. At the 2.9% download-to-paid median that needs ~950k installs.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="src"><span><b>Sources</b> EuropeActive / Deloitte EHFMR 2026 (75.5M, €39.1B, Spain 7.1M) · Deloitte / España Activa 2025 (7.053M members, 16.5%) · 2Playbook / Adecaff Barcelona 2025 · HFA 2025 Benchmarking (33.6% attrition + 5.5% growth = 39% new) · RevenueCat State of Subscription Apps 2026 ($39.94, 2.9%) · Fortune Business Insights 2026 ($12.27B, Europe 26%). Rings not to scale.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Competitors</div>
+  <div class="num">04 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">The landscape · price vs how much the app coaches you</div>
+    <h2>Cheap apps <span class="mark">log</span>. Apps that <span class="mark">coach</span> cost $13 to $200. The middle is empty.</h2>
+    <div class="cols">
+      <div class="chart" style="min-height:52cqh"><svg viewBox="0 0 680 360" role="img" aria-label="Competitor map: price per month against how much the app coaches you. Heaft sits at $9.99 on the coaching side.">
+<line class="grid" x1="70" y1="269.4" x2="660" y2="269.4"/><text class="ax" x="62" y="273.4" text-anchor="end">$5</text>
+<line class="grid" x1="70" y1="227.8" x2="660" y2="227.8"/><text class="ax" x="62" y="231.8" text-anchor="end">$10</text>
+<line class="grid" x1="70" y1="186.3" x2="660" y2="186.3"/><text class="ax" x="62" y="190.3" text-anchor="end">$20</text>
+<line class="grid" x1="70" y1="131.4" x2="660" y2="131.4"/><text class="ax" x="62" y="135.4" text-anchor="end">$50</text>
+<line class="grid" x1="70" y1="89.8" x2="660" y2="89.8"/><text class="ax" x="62" y="93.8" text-anchor="end">$100</text>
+<line class="grid" x1="70" y1="48.3" x2="660" y2="48.3"/><text class="ax" x="62" y="52.3" text-anchor="end">$200</text>
+<line class="axis" x1="70" y1="300" x2="660" y2="300"/>
+<text class="ax" x="70" y="322">Logs what you did</text><text class="ax" x="660" y="322" text-anchor="end">Coaches what you do next</text>
+<text class="ax" x="62" y="16" text-anchor="end">$ / month</text>
+<circle cx="117.2" cy="282.9" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="117.2" y="273.9" text-anchor="middle">Hevy</text>
+<circle cx="152.6" cy="269.5" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="152.6" y="284.5" text-anchor="middle">Strong</text>
+<circle cx="223.4" cy="249.3" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="223.4" y="240.3" text-anchor="middle">TrackFull</text>
+<circle cx="270.6" cy="212.2" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="268.6" y="228.2" text-anchor="middle">JEFIT</text>
+<rect x="194.3" y="156.5" width="11" height="11" rx="2" fill="#8A93A6"/><text x="199.8" y="153.0" text-anchor="middle">Centr</text>
+<rect x="300.5" y="156.5" width="11" height="11" rx="2" fill="#8A93A6"/><text x="306.0" y="153.0" text-anchor="middle">Ladder</text>
+<circle cx="376.8" cy="218.6" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="386.8" y="222.6">Freeletics</text>
+<circle cx="347.3" cy="203.6" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="347.3" y="219.6" text-anchor="middle">Boostcamp</text>
+<circle cx="329.6" cy="189.4" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="329.6" y="180.4" text-anchor="middle">Zing</text>
+<circle cx="435.8" cy="199.7" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="441.8" y="190.7" text-anchor="middle">Fitbod</text>
+<circle cx="471.2" cy="212.2" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="471.2" y="229.2" text-anchor="middle">Alpha Progression</text>
+<circle cx="488.9" cy="132.6" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="488.9" y="123.6" text-anchor="middle">Dr. Muscle</text>
+<circle cx="530.2" cy="152.8" r="6" fill="#646B7C" stroke="#fff" stroke-width="1.5"/><text x="530.2" y="143.8" text-anchor="middle">JuggernautAI</text>
+<circle cx="624.6" cy="48.6" r="6" fill="#fff" stroke="#F0B323" stroke-width="2.5"/><text x="624.6" y="38.6" text-anchor="middle">Future</text>
+<circle cx="589.2" cy="48.3" r="6" fill="#fff" stroke="#F0B323" stroke-width="2.5"/><text x="589.2" y="65.3" text-anchor="middle">Caliber coaching</text>
+<circle cx="565.6" cy="227.9" r="9" fill="#E0424B" stroke="#fff" stroke-width="2"/><text class="lab" x="565.6" y="214.9" text-anchor="middle" style="fill:#B21F28;font-weight:800;font-size:14px">Heaft · $9.99</text>
+</svg></div>
+      <div class="ring-list">
+        <div class="row"><i style="background:#646B7C"></i><div><div class="k">Software · loggers &amp; generators</div><div class="d">Hevy and Strong record sets for $4. Fitbod, Alpha Progression and JuggernautAI generate workouts for $13 to $35, but none talks back or feeds you.</div></div></div>
+        <div class="row"><i style="background:#8A93A6;border-radius:.25cqw"></i><div><div class="k">Content · video libraries</div><div class="d">Centr and Ladder sell the same weekly programme to everyone. Not adapted to your lifts.</div></div></div>
+        <div class="row"><i style="background:#fff;box-shadow:inset 0 0 0 .22cqw #F0B323"></i><div><div class="k">Humans · real trainers in an app</div><div class="d">Future and Caliber coaching at $199 to $200 a month. A real coach, at a real coach's price. Future tried AI and shut it down in June 2026.</div></div></div>
+        <div class="row"><i style="background:#E0424B"></i><div><div class="k">Heaft</div><div class="d">Writes the week, runs the session, adapts next week, moves your food targets, answers questions. At the category's median price.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="src"><span><b>Prices</b> US App Store listings read 15 Sep 2026; Freeletics shown as its 3-month Coach block ÷ 3. Position on the x-axis is our reading of each product's own marketing. Vertical axis is logarithmic.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Competitors</div>
+  <div class="num">05 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">What they charge · US App Store, 15 Sep 2026</div>
+    <h2>We price at the category median, <span class="mark">$9.99</span>, and give more for it.</h2>
+    <div class="grow" style="justify-content:center">
+    <table class="t">
+      <thead><tr><th>App</th><th>Free tier</th><th class="n">Per month</th><th class="n">Per year</th><th>What the "AI" really is</th><th class="n">Rating</th></tr></thead>
+      <tbody>
+        <tr><td><span class="name">Hevy</span><span class="sub">Barcelona · 16M users</span></td><td>Yes</td><td class="n">$3.99</td><td class="n">$23.99</td><td><span class="pill log">No AI</span> logger + social feed</td><td class="n">4.9</td></tr>
+        <tr><td><span class="name">Strong</span></td><td>Yes</td><td class="n">$4.99</td><td class="n">$29.99</td><td><span class="pill log">No AI</span> logger</td><td class="n">4.9</td></tr>
+        <tr><td><span class="name">TrackFull</span><span class="sub">closest to our shape</span></td><td>Yes</td><td class="n">$6.99</td><td class="n">$69.99</td><td><span class="pill log">Feedback</span> comments on what you logged</td><td class="n">—</td></tr>
+        <tr><td><span class="name">Freeletics</span><span class="sub">54M registered</span></td><td>Limited</td><td class="n">$11.66</td><td class="n">$79.99</td><td><span class="pill gen">Generator</span> weekly re-plan, bodyweight roots</td><td class="n">4.6</td></tr>
+        <tr><td><span class="name">Fitbod</span><span class="sub">15M downloads · raised prices Aug 2026</span></td><td>Trial only</td><td class="n">$15.99</td><td class="n">$95.99</td><td><span class="pill gen">Generator</span> recovery model, no chat, no food</td><td class="n">4.8</td></tr>
+        <tr><td><span class="name">Zing Coach</span></td><td>Trial only</td><td class="n">$18.99</td><td class="n">$59.99</td><td><span class="pill gen">Quiz → template</span> plus check-ins</td><td class="n">4.8</td></tr>
+        <tr><td><span class="name">JuggernautAI</span></td><td>Trial only</td><td class="n">$34.99</td><td class="n">$349.99</td><td><span class="pill gen">Rules engine</span> powerlifting only</td><td class="n">4.8</td></tr>
+        <tr><td><span class="name">Future</span></td><td>No</td><td class="n">$199</td><td class="n">—</td><td><span class="pill human">Human</span> real trainer by message</td><td class="n">4.9</td></tr>
+        <tr class="us"><td><span class="name">Heaft</span><span class="sub">3-day trial</span></td><td>Yes</td><td class="n">$9.99</td><td class="n">$59.99</td><td><span class="pill coach">Coach</span> writes, runs, adapts, feeds, answers</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="math"><span>Category benchmark (RevenueCat 2026, health &amp; fitness):</span><b>$9.99 / month</b><span class="op">·</span><b>$39.94 / year</b><span class="op">·</span><span>trial → paid</span><b>37.7%</b><span class="op">·</span><span>download → paid</span><b>2.9%</b></div>
+  </div>
+  <div class="src"><span><b>Sources</b> Apple App Store US listings (15 Sep 2026) · Freeletics 3-month Coach $34.99 ÷ 3 · Hevy, Freeletics, Fitbod user counts from their own sites · RevenueCat State of Subscription Apps 2026. Ratings are US App Store; TrackFull has too few ratings to show one.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Competitors</div>
+  <div class="num">06 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Who actually makes money · annual revenue, USD</div>
+    <h2>The money is in <span class="mark">food</span> and <span class="mark">running</span>. No gym coach app has passed $50M.</h2>
+    <div class="legend"><span><i style="background:#3A7BD5"></i>Nutrition</span><span><i style="background:#2FA36B"></i>Running</span><span><i style="background:#F0B323"></i>Gym / strength</span></div>
+    <div class="chart" style="min-height:46cqh"><svg viewBox="0 0 680 300" role="img" aria-label="Estimated annual revenue: MyFitnessPal 310, Strava 338, Ladder 40, Fitbod 24, Freeletics 25, Hevy 7 million dollars">
+<text class="lab" x="140" y="35.0" text-anchor="end">MyFitnessPal</text>
+<rect x="150" y="16" width="389.7" height="30" rx="4" fill="#3A7BD5"/>
+<text class="v" x="547.7" y="35.0">$310M</text>
+<text x="599.7" y="35.0" style="fill:#8794A0;font-size:11px">2025 revenue, −5.7% YoY</text>
+<text class="lab" x="140" y="79.0" text-anchor="end">Strava (+ Runna)</text>
+<rect x="150" y="60" width="424.9" height="30" rx="4" fill="#2FA36B"/>
+<text class="v" x="582.9" y="79.0">$338M</text>
+<text x="634.9" y="79.0" style="fill:#8794A0;font-size:11px">2024 revenue; Runna bought Apr 2025</text>
+<text class="lab" x="140" y="123.0" text-anchor="end">Ladder</text>
+<rect x="150" y="104" width="50.3" height="30" rx="4" fill="#F0B323"/>
+<text class="v" x="208.3" y="123.0">$40M</text>
+<text x="252.3" y="123.0" style="fill:#8794A0;font-size:11px">est. · 150k subs × $27–54M ARR range</text>
+<text class="lab" x="140" y="167.0" text-anchor="end">Fitbod</text>
+<rect x="150" y="148" width="30.2" height="30" rx="4" fill="#F0B323"/>
+<text class="v" x="188.2" y="167.0">$24M</text>
+<text x="232.2" y="167.0" style="fill:#8794A0;font-size:11px">est. · ~$2M / month in-app</text>
+<text class="lab" x="140" y="211.0" text-anchor="end">Freeletics</text>
+<rect x="150" y="192" width="31.4" height="30" rx="4" fill="#F0B323"/>
+<text class="v" x="189.4" y="211.0">$25M</text>
+<text x="233.4" y="211.0" style="fill:#8794A0;font-size:11px">est. · €22.5M, 2026</text>
+<text class="lab" x="140" y="255.0" text-anchor="end">Hevy</text>
+<rect x="150" y="236" width="8.8" height="30" rx="4" fill="#F0B323"/>
+<text class="v" x="166.8" y="255.0">$7M</text>
+<text x="210.8" y="255.0" style="fill:#8794A0;font-size:11px">est. · ~$600k / month in-app</text>
+</svg></div>
+    <div class="math"><span>Health &amp; fitness apps took</span><b>$4.5B</b><span>of in-app revenue in 2025 (+13%) while downloads grew only</span><b>0.8%</b><span>. The market pays more, not more people. Whoever owns the gym behaviour, the way Runna owned running, takes the open seat.</span></div>
+  </div>
+  <div class="src"><span><b>Sources</b> Business of Apps (MyFitnessPal 2025) · Sacra (Strava 2024) · Yahoo Finance / BusinessWire (Ladder subs, Nov–Dec 2024) · Sensor Tower public teasers (Fitbod, Hevy monthly IAP, early 2026) · Die Deutsche Wirtschaft (Freeletics est.) · Sensor Tower, State of Mobile H&amp;F 2025. "est." = analyst estimate, not company disclosure. Peloton ($2.4B) omitted: hardware and classes.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> The open seat</div>
+  <div class="num">07 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Why nobody leads the AI-coach category yet</div>
+    <h2>Four reasons the seat is still <span class="mark">empty</span>.</h2>
+    <div class="cards">
+      <div class="card"><div class="k">1 · "AI" is a label</div><div class="h">Most "AI coaches" are a quiz and a template</div><div class="p">Real adaptive engines exist, but they are niche and silent: no dialogue, no nutrition.</div><div class="ev"><b>28%</b> of health &amp; fitness apps now bid on "AI" keywords, up from 19% a year earlier. Sensor Tower, Feb 2026.</div></div>
+      <div class="card"><div class="k">2 · Split in three</div><div class="h">Loggers, generators, humans. Nobody does all three</div><div class="p">$4 apps record. $13–35 apps generate. $199 apps put a person on the phone.</div><div class="ev">Reviewers frame the market as "algorithmic vs human-first, <b>no dominant leader</b>". Big brands (Centr, Ladder, Nike) ship content, not coaching.</div></div>
+      <div class="card"><div class="k">3 · Trust not yet earned</div><div class="h">People do not believe an AI coach yet</div><div class="p">So the coach must prove itself in week one, with a real plan, not a chat box.</div><div class="ev">Only <b>10%</b> prefer AI guidance to a human coach; 37% undecided. Les Mills 2026 (10,000+ people). Future killed its AI beta in <b>June 2026</b>.</div></div>
+      <div class="card"><div class="k">4 · Retention kills everyone</div><div class="h">Whoever survives the first six weeks wins</div><div class="p">The category loses almost everyone; the winner is the one that keeps beginners.</div><div class="ev">Day-30 retention <b>3–4%</b>. First renewal: monthly <b>57%</b>, annual <b>25%</b>. RevenueCat H&amp;F, Apr 2026; Business of Apps.</div></div>
+    </div>
+    <div class="persona" style="background:var(--ground)"><div class="av" style="background:#2FA36B">R</div><div><div class="who">The proof it can be done: Runna</div><div class="say">One behaviour (running), plans that genuinely re-adjust from last week, $19.99 a month. Acquired by Strava in April 2025. The gym version of Runna does not exist yet.</div></div></div>
+  </div>
+  <div class="src"><span><b>Sources</b> Sensor Tower, Health &amp; Fitness Apps &amp; AI (Feb 2026) · Les Mills 2026 Global Fitness Report · Athletech News, Future pulls the plug on AI (Jun 2026) · RevenueCat renewal rates by category (Apr 2026) · Business of Apps H&amp;F benchmarks · Strava press release (17 Apr 2025) · SportsPro (Runna price).</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> What we do better</div>
+  <div class="num">08 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Feature by feature</div>
+    <h2>Others <span class="mark">log</span> or <span class="mark">generate</span>. Heaft runs the whole loop.</h2>
+    <div class="grow" style="justify-content:center">
+    <table class="m">
+      <thead><tr><th>Capability</th><th>Hevy / Strong</th><th>Fitbod</th><th>Freeletics</th><th>TrackFull</th><th>Future</th><th class="us">Heaft</th></tr></thead>
+      <tbody>
+        <tr><td>Writes your program for you</td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span> human</td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Next week changes from your logs</td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span></td><td><span class="mk-h">~</span> weekly feedback</td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span> human</td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Runs the session live (sets, rest timer, cues)</td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Two-way coach chat that knows your data</td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-h">~</span></td><td><span class="mk-h">~</span> feedback cards</td><td><span class="mk-y">✓</span> human</td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Nutrition target follows today's training</td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-h">~</span> paid add-on</td><td><span class="mk-h">~</span> diary only</td><td><span class="mk-n"></span></td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Swap an exercise, reason remembered</td><td><span class="mk-n"></span></td><td><span class="mk-h">~</span></td><td><span class="mk-h">~</span></td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span> human</td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Scan a coach's written plan (PDF / photo)</td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Cycle-aware training and hydration</td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-n"></span></td><td><span class="mk-h">~</span> human</td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Friends, crews, leaderboards</td><td><span class="mk-y">✓</span></td><td><span class="mk-n"></span></td><td><span class="mk-y">✓</span></td><td><span class="mk-y">✓</span></td><td><span class="mk-n"></span></td><td class="us"><span class="mk-y">✓</span></td></tr>
+        <tr><td>Price per month</td><td>free · $4</td><td>$13</td><td>$13</td><td>$7</td><td>$199</td><td class="us">$9.99</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="keys"><span><i class="mk-y" style="width:1.3cqw;height:1.3cqw;font-size:.8cqw">✓</i> yes</span><span><i class="mk-h" style="width:1.3cqw;height:1.3cqw;font-size:.75cqw">~</i> partly</span><span><i class="mk-n"></i> not offered</span><span>"human" = a person does it, not software</span></div>
+  </div>
+  <div class="src"><span><b>Basis</b> competitor rows from each company's own store listing and website, read Sep 2026 ("not offered" = not claimed in their marketing). Heaft rows are shipped code in the repository. Prices rounded; see the pricing slide for exact figures.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Unit economics</div>
+  <div class="num">09 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">What one user costs us · per month</div>
+    <h2>A free user costs <span class="mark">13 cents</span>. A Pro user costs <span class="mark">43 cents</span>.</h2>
+    <div class="ue">
+      <div class="ubox">
+        <div class="k">Free user · typical month</div>
+        <div class="big">$0.13<small>/ month</small></div>
+        <div class="sub">12 workouts · 20 coach messages · 1 generated program · 10 meal photos</div>
+        <div class="lines">
+          <div class="l"><span>Coach chat · 20 msgs × $0.0018</span><b>$0.035</b></div>
+          <div class="l"><span>Program + 4 weekly updates</span><b>$0.023</b></div>
+          <div class="l"><span>Session analysis · 12 × $0.0025</span><b>$0.030</b></div>
+          <div class="l"><span>Meal photos · 10 × $0.0002</span><b>$0.002</b></div>
+          <div class="l"><span>Server share (at 1,000 users)</span><b>$0.039</b></div>
+          <div class="l tot"><span>Total</span><b>$0.13</b></div>
+        </div>
+      </div>
+      <div class="ubox us">
+        <div class="k">Pro user · typical month</div>
+        <div class="big">$0.43<small>/ month</small></div>
+        <div class="sub">16 workouts · 150 coach messages · 2 programs · 2 plan scans · 60 meal photos</div>
+        <div class="lines">
+          <div class="l"><span>Coach chat · 150 msgs × $0.0018</span><b>$0.263</b></div>
+          <div class="l"><span>Programs, updates, weight tips</span><b>$0.044</b></div>
+          <div class="l"><span>Session analysis · 16 × $0.0025</span><b>$0.040</b></div>
+          <div class="l"><span>Plan scans 2 × $0.014 · photos 60 × $0.0002</span><b>$0.043</b></div>
+          <div class="l"><span>Server share (at 1,000 users)</span><b>$0.039</b></div>
+          <div class="l tot"><span>Total</span><b>$0.43</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="math"><span>Worst case: a Pro who hits every daily quota (1,500 messages, 4 scans, 300 photos) costs</span><b>$2.89</b><span>a month. Still below the price.</span></div>
+  </div>
+  <div class="src"><span><b>Rates</b> Cerebras gpt-oss-120b $0.35 / $0.75 per 1M tokens · Together Llama 3.3 70B $1.04 · Gemini 2.5 Flash-Lite $0.10 / $0.40 · Gemini 2.5 Flash $0.30 / $2.50 (list prices, 15 Sep 2026). Token counts per call estimated from Heaft's prompt code. Server = DigitalOcean 4 GB droplet $24 + backups + domain + store fees = $39 / month fixed.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Unit economics</div>
+  <div class="num">10 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Does one Pro subscription pay?</div>
+    <h2>One monthly Pro keeps <span class="mark">$7.98</span> and pays for <span class="mark">62 free users</span>.</h2>
+    <div class="cols eq">
+      <div class="chart" style="min-height:40cqh">
+        <svg viewBox="0 0 640 300" role="img" aria-label="From $9.99 list price to $7.98 kept: store fee 1.50, payments 0.08, AI 0.39, server 0.04">
+          <g class="grid"><line x1="60" y1="40" x2="620" y2="40"/><line x1="60" y1="100" x2="620" y2="100"/><line x1="60" y1="160" x2="620" y2="160"/><line x1="60" y1="220" x2="620" y2="220"/></g>
+          <line class="axis" x1="60" y1="260" x2="620" y2="260"/>
+          <text class="ax" x="52" y="44" text-anchor="end">$10</text><text class="ax" x="52" y="164" text-anchor="end">$5</text><text class="ax" x="52" y="264" text-anchor="end">$0</text>
+          <!-- scale: 1 USD = 22px, baseline y=260 -->
+          <rect x="80"  y="40.2" width="72" height="219.8" rx="4" fill="#646B7C"/>
+          <rect x="176" y="40.2" width="72" height="33" rx="4" fill="#F0B323"/>
+          <rect x="272" y="73.2" width="72" height="1.8" rx="1" fill="#F0B323"/>
+          <rect x="368" y="75" width="72" height="8.6" rx="3" fill="#3A7BD5"/>
+          <rect x="464" y="83.6" width="72" height="0.9" rx="0" fill="#3A7BD5"/>
+          <rect x="560" y="84.5" width="60" height="175.5" rx="4" fill="#E0424B"/>
+          <text class="v" x="116" y="32" text-anchor="middle">$9.99</text>
+          <text class="v" x="212" y="32" text-anchor="middle">−$1.50</text>
+          <text class="v" x="308" y="64" text-anchor="middle">−$0.08</text>
+          <text class="v" x="404" y="66" text-anchor="middle">−$0.39</text>
+          <text class="v" x="500" y="74" text-anchor="middle">−$0.04</text>
+          <text class="v" x="590" y="76" text-anchor="middle" style="font-weight:700">$7.98</text>
+          <text x="116" y="282" text-anchor="middle">List price</text>
+          <text x="212" y="282" text-anchor="middle">Store fee 15%</text>
+          <text x="308" y="282" text-anchor="middle">Payments 1%</text>
+          <text x="404" y="282" text-anchor="middle">AI</text>
+          <text x="500" y="282" text-anchor="middle">Server</text>
+          <text class="lab" x="590" y="282" text-anchor="middle">Kept</text>
+        </svg>
+      </div>
+      <div class="ring-list">
+        <div class="row"><i style="background:#E0424B"></i><div><div class="k">Monthly plan · $9.99</div><div class="v">80%</div><div class="d">of the list price stays with us. One Pro pays for 62 free users. Break-even conversion: <b>1.6%</b> of users.</div></div></div>
+        <div class="row"><i style="background:#3A7BD5"></i><div><div class="k">Annual plan · $59.99 = $5.00 / mo</div><div class="v">76%</div><div class="d">stays with us ($3.78). One annual Pro pays for 29 free users. Break-even conversion: <b>3.3%</b>.</div></div></div>
+        <div class="row"><i style="background:#F0B323"></i><div><div class="k">Fixed costs · $39 / month</div><div class="v">5 Pros</div><div class="d">on the monthly plan (or 11 annual) cover the whole server, backups, domain and store fees.</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="src"><span><b>Assumptions</b> Apple Small Business Program and Google Play subscription fee 15% · RevenueCat 1% above $2.5k monthly revenue · typical Pro AI use $0.39 · server share at 1,000 users. A Pro who maxes every quota ($2.89 AI) still leaves $5.51 on the monthly plan.</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Unit economics</div>
+  <div class="num">11 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">What the business looks like at scale · per month</div>
+    <h2>At the category's median conversion, Heaft is profitable from <span class="mark">1,000 users</span>.</h2>
+    <div class="grow" style="justify-content:center">
+    <table class="t">
+      <thead><tr><th>Users</th><th class="n">Paying (2.9%)</th><th class="n">Revenue kept</th><th class="n">AI cost, free users</th><th class="n">AI cost, Pro users</th><th class="n">Servers</th><th class="n">Profit</th><th class="n">Margin</th></tr></thead>
+      <tbody>
+        <tr><td><span class="name">1,000</span><span class="sub">Barcelona pilot</span></td><td class="n">29</td><td class="n">$205</td><td class="n">$87</td><td class="n">$11</td><td class="n">$39</td><td class="n"><b>$67</b></td><td class="n">33%</td></tr>
+        <tr><td><span class="name">10,000</span><span class="sub">Spain, year 1–2</span></td><td class="n">290</td><td class="n">$2,048</td><td class="n">$874</td><td class="n">$113</td><td class="n">$63</td><td class="n"><b>$999</b></td><td class="n">49%</td></tr>
+        <tr><td><span class="name">100,000</span><span class="sub">Spain + first EU markets</span></td><td class="n">2,900</td><td class="n">$20,482</td><td class="n">$8,739</td><td class="n">$1,125</td><td class="n">$400</td><td class="n"><b>$10,217</b></td><td class="n">50%</td></tr>
+        <tr class="us"><td><span class="name">100,000</span><span class="sub">at top-quartile conversion, 6.2%</span></td><td class="n">6,200</td><td class="n">$43,788</td><td class="n">$8,442</td><td class="n">$2,406</td><td class="n">$400</td><td class="n"><b>$32,541</b></td><td class="n">74%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="math"><span>The biggest cost line is the AI we give away to free users, not the Pros. Blended break-even conversion is</span><b>1.3%</b><span>. The lever is the freemium boundary: which coach features stay free.</span></div>
+  </div>
+  <div class="src"><span><b>Assumptions</b> revenue kept = list price minus 15% store fee and 1% payments; 68% of subscribers monthly, 32% annual (RevenueCat H&amp;F mix) → $7.06 kept per Pro · free user AI $0.09, Pro AI $0.39 · servers: 4 GB droplet $39 → 8 GB $63 → larger box + managed Postgres ≈ $400. No marketing or salaries included. Team costs are the real next question.</span></div>
+</section>
+
+<section class="slide dark">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#fff"/></svg> The answer</div>
+  <div class="num">12 / 13</div>
+  <div class="pad" style="justify-content:center">
+    <div class="eyebrow">How we become the first full coach</div>
+    <h2 style="max-width:34ch">Nobody owns "the coach" yet. The seat is <span class="mark">open</span>, and the maths says we can afford to sit in it.</h2>
+    <div class="cards three" style="flex:0 0 auto;margin-top:1cqh">
+      <div class="card" style="border-color:rgba(255,255,255,.16)"><div class="k" style="color:var(--red)">Bet 1 · Product</div><div class="h">Lead with the programme, not the log</div><div class="p" style="color:rgba(255,255,255,.7)">A new user sees a generated week before logging anything. Nutrition follows the day. Next week gets harder on its own.</div></div>
+      <div class="card" style="border-color:rgba(255,255,255,.16)"><div class="k" style="color:var(--red)">Bet 2 · Price</div><div class="h">Coach depth at logger prices</div><div class="p" style="color:rgba(255,255,255,.7)">$9.99 a month sits between the loggers ($4) and the AI generators ($13), and 20× under a human coach app ($199). Each Pro still keeps 80%.</div></div>
+      <div class="card" style="border-color:rgba(255,255,255,.16)"><div class="k" style="color:var(--red)">Bet 3 · Segment</div><div class="h">Win beginners in their first 6 months</div><div class="p" style="color:rgba(255,255,255,.7)">The half who quit by month six are the people no logger serves. Barcelona students first, 15 interviews, then the numbers decide.</div></div>
+    </div>
+    <p class="lede" style="margin-top:1.4cqh">Built, not finished. The study says the market is real and the margin is real. The next three weeks test whether beginners agree.</p>
+  </div>
+  <div class="src"><span><b>heaft.app</b> · Your coach. Every set.</span><span>Heaft Market Study · HTE401 · September 2026</span></div>
+</section>
+
+<section class="slide">
+  <div class="slug"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#0E1013"/></svg> Sources</div>
+  <div class="num">13 / 13</div>
+  <div class="pad">
+    <div class="eyebrow">Where every number comes from</div>
+    <h2 style="font-size:3.4cqw">Sources</h2>
+    <div class="cols eq" style="align-items:start;font-size:1.1cqw;line-height:1.5;color:var(--t2)">
+      <div>
+        <p style="margin:0 0 .6cqh"><b style="color:var(--t1)">Market &amp; members</b></p>
+        <ul style="margin:0;padding-left:1.4cqw">
+          <li>EuropeActive &amp; Deloitte, European Health &amp; Fitness Market Report 2026 (2025 data): 75.5M members, €39.1B, Spain 7.1M. europeactive.eu</li>
+          <li>Deloitte, Fundación España Activa, FNEID, Informe anual del sector del fitness en España, 1st ed. 2025: 7.053M members, 16.5%, €3.235B, €38.2/month.</li>
+          <li>2Playbook / Adecaff, Estudi del sector del fitness a Barcelona 2025: 733,061 members, €476M, 42% penetration.</li>
+          <li>Health &amp; Fitness Association, 2025 Fitness Industry Benchmarking Report: 66.4% retention. healthandfitness.org</li>
+          <li>Fortune Business Insights, Fitness App Market 2026: $12.27B (2025), Europe 26%, 13.6% CAGR. Grand View Research and Precedence give $12.1B.</li>
+          <li>Research and Markets, AI Personal Trainer Market: $16.9B (2025) → $35.3B (2030).</li>
+          <li>Sensor Tower, State of Mobile Health &amp; Fitness 2025 and Health &amp; Fitness Apps &amp; AI (Feb 2026): $4.5B IAP, +0.8% downloads, 28% AI keywords.</li>
+        </ul>
+      </div>
+      <div>
+        <p style="margin:0 0 .6cqh"><b style="color:var(--t1)">Behaviour, competitors, costs</b></p>
+        <ul style="margin:0;padding-left:1.4cqw">
+          <li>Sperandei S., Vieira M.C., Reis A.C. (2016), J Sci Med Sport 19(11): 63% quit before month 3, &lt;4% at 12 months. PubMed 26874647</li>
+          <li>Les Mills 2026 Global Fitness Report: 54% don't know where to begin; 10% prefer an AI coach.</li>
+          <li>RevenueCat, State of Subscription Apps 2026 and renewal rates by category (Apr 2026): $9.99 / $39.94 medians, 2.9%, 37.7%, 57% / 25% renewals.</li>
+          <li>Apple App Store US listings, 15 Sep 2026; company sites (Fitbod, Freeletics, Hevy, Future, Zing, JuggernautAI); Athletech News (Future, Jun 2026); Strava press (Runna, Apr 2025); Business of Apps (MyFitnessPal); Sacra (Strava).</li>
+          <li>Trainer prices: roeis.es (Barcelona), coachway.io (DE), Bark (UK), GoodRx (US), all 2026.</li>
+          <li>Costs: Cerebras, Together AI, Google Gemini pricing pages; DigitalOcean droplets; Apple Small Business Program; Google Play fees; RevenueCat pricing. All read 15 Sep 2026.</li>
+          <li>Heaft cost model: token counts per call estimated from Heaft's own prompt code; usage personas are assumptions, not measured traffic.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="src"><span>"est." marks third-party estimates. Figures we could not trace to a primary source were left out.</span><span>Heaft Market Study · September 2026</span></div>
+</section>
+
+
+</div></div>
+
+<div class="notes" id="notes" hidden>
+  <div class="m" id="nmeta"></div>
+  <div id="nsay"></div>
+</div>
+
+<script>
+window.__NOTES__ = [{"m": "Cover · 15 s · Cover", "say": "Hi. This is the Heaft market study. We asked five questions. Who do we serve? How big is the market? Who do we compete with, and at what price? What does one user cost us? And why has nobody won this category yet?<br><span style='color:#8C93A6'>How to read: Stand still. Two seconds of silence before you start. Count the five questions on your fingers. It helps you remember them. Do not read the slide. Look at the audience.</span>"}, {"m": "Slide 1 · 40 s · The gap", "say": "Three numbers. <em>63 percent</em> of new gym members quit before month three. That is from a study of more than five thousand members. <em>54 percent</em> of beginners say they do not know where to start. The thing that fixes both is a personal trainer. But a trainer costs <em>35 to 40 euros an hour</em> in Barcelona. The gym itself costs 38 euros a month. So the people who need a coach most cannot pay for one.<br><span style='color:#8C93A6'>How to read: Say each number, then stop for one second. Let it land. Point at each big red number when you say it. The last line is the whole slide. Say it slowly. Do not add extra numbers. Three is enough.</span>"}, {"m": "Slide 2 · 35 s · Segmentation", "say": "We segment by the problem, not by age. Two primary segments. One: beginners who need direction. 'I joined a gym, but I do not know what to do.' Two: people who start and stop. 'I get motivated, then I lose the routine.' These two overlap. Someone who needs a plan, and needs help sticking to it. Everything else is secondary for now. Alex is our example customer. 23, student, Barcelona, new at the gym. We test this with 15 interviews before we spend on anything else.<br><span style='color:#8C93A6'>How to read: Read the two quotes like a real person talking. Change your voice a little. Point at the two red cards. Ignore the grey ones. Say 'Alex' warmly. He is a person, not a chart. '15 interviews' is the promise. Make it sound like a plan, not a hope.</span>"}, {"m": "Slide 3 · 50 s · Market size: TAM, SAM, SOM", "say": "We built the market from gym members, not from analyst reports. Europe has <em>75 million</em> gym members. The median fitness app costs 40 dollars a year. 75 million times 40 dollars is <em>3 billion dollars</em>. That is our TAM. A top-down check agrees. Europe is 26 percent of the 12 billion global app market. Spain is our SAM. <em>7 million</em> members, so <em>282 million dollars</em>. And 2.75 million of them are new every year. Our SOM, what we can really win by year three: 1 percent of those new members. <em>27,500 subscribers. 1.1 million dollars</em> a year. It is a small number on purpose. It is a number we can defend.<br><span style='color:#8C93A6'>How to read: This is the hardest slide. Go slow. Three rings, three numbers, top to bottom. Point at the big ring, then the blue ring, then the red circle. Do not jump around. Say the multiplication out loud. People trust maths they can follow. End on 'a number we can defend'. That line answers the question before anyone asks it.</span>"}, {"m": "Slide 4 · 45 s · The landscape", "say": "This map shows price against how much the app coaches you. Bottom left: loggers. Hevy and Strong. Four dollars. They record what you did. Middle: generators. Fitbod, Alpha Progression, Juggernaut. 13 to 35 dollars. They write workouts. But they do not talk to you, and they do not feed you. Top right: humans. Future and Caliber. <em>200 dollars</em> a month. Now look at the middle right. It is empty. A full coach, at a normal app price. Nobody is there. That is where Heaft sits. <em>9.99</em>.<br><span style='color:#8C93A6'>How to read: Walk the map with your hand: bottom left, middle, top right, then the red dot. Pause before 'It is empty'. That pause is the point of the slide. Keep 'loggers, generators, humans' as three clear words. The audience will reuse them. Do not name every dot. Three groups and one red dot.</span>"}, {"m": "Slide 5 · 35 s · Pricing", "say": "Here are the real prices, from the App Store, this week. The loggers have free tiers. The generators mostly do not. The benchmark for health and fitness apps is <em>9.99 a month</em>. We price exactly at that median. Fitbod raised its price to 15.99 in August. Zing is 18.99. Our annual plan, 59.99, is above the 39.94 median. That is a deliberate test. Same price as the market. More coach for it.<br><span style='color:#8C93A6'>How to read: Do not read the table. Point at the red Heaft row and at the benchmark line at the bottom. Say '9.99' twice: once for the benchmark, once for us. The repetition is the message. If someone asks about the annual price, say: 'It is a test. We will lower it if the data says so.'</span>"}, {"m": "Slide 6 · 30 s · Who makes money", "say": "Where is the money today? Food and running. MyFitnessPal, <em>310 million</em> dollars, but shrinking. Strava, <em>338 million</em>, and they bought Runna, a running coach. Look at the yellow bars. No gym coaching app has passed <em>50 million</em>. One more fact. In 2025 fitness apps earned 13 percent more money, with almost no growth in downloads. People are paying more, not more people. The gym seat is open.<br><span style='color:#8C93A6'>How to read: Point at the two long bars, then sweep your hand over the short yellow ones. Say 'the gym seat is open' as a conclusion, not a slogan. Calm voice. 'est.' on the slide means estimate. If asked, say so honestly.</span>"}, {"m": "Slide 7 · 45 s · Why nobody leads yet", "say": "Four reasons the seat is still empty. One. 'AI' is a label. <em>28 percent</em> of fitness apps now buy the word AI in the store. Most of it is a quiz and a template. Two. The market is split in three: loggers, generators, humans. Nobody does all three. Three. Trust. Only <em>10 percent</em> of people prefer an AI coach today. Future, the 199 dollar app, shut down its AI beta in June. So our coach must prove itself in week one, with a real plan, not a chat box. Four. Retention kills everyone. Day 30 retention is <em>3 to 4 percent</em>. Whoever keeps beginners for six weeks, wins. Runna proved it can be done for running. The gym version does not exist yet.<br><span style='color:#8C93A6'>How to read: Count the four reasons on your fingers again. Same gesture as the cover. People remember gestures. Reason three is the honest one. Do not rush it. Admitting the trust problem makes us credible. Finish on Runna with energy. It is the proof, and it is the last thing they hear. If you are short on time, cut reason two. The map already showed it.</span>"}, {"m": "Slide 8 · 35 s · What we do better", "say": "Feature by feature. Green means it is in the product. Yellow means partly. A dash means not offered. Look at the two rows nobody else has. Nutrition that follows today's training. And scanning a coach's written plan, from a PDF or a photo. Everything in our column is shipped code, not a roadmap. Others log, or generate. Heaft runs the whole loop. Built, not finished.<br><span style='color:#8C93A6'>How to read: Point at the red Heaft column first, then at the two rows with only one green dot. 'Built, not finished' is our honest line. Say it plainly. No apology, no boasting. Do not defend every yellow dot for competitors. If challenged: 'That is what their own marketing claims.'</span>"}, {"m": "Slide 9 · 45 s · What one user costs us", "say": "Now real numbers about cost. A typical free user costs us <em>13 cents</em> a month. About 9 cents of AI, 4 cents of server. A typical Pro user costs <em>43 cents</em> a month. 150 coach messages, two programs, two plan scans, sixty meal photos. Even a Pro who hits every daily limit, 1,500 messages, costs <em>2 dollars 89</em>. Still far below the price. These are today's list prices from Cerebras, Together and Google, times the real size of our prompts.<br><span style='color:#8C93A6'>How to read: Say '13 cents' and '43 cents' slowly. They are the two numbers people will quote later. Point at the two boxes: left free, right Pro. The worst case line is your safety net. If someone says 'AI is expensive', point at 2.89. Do not explain tokens unless asked. If asked: 'A token is about three quarters of a word.'</span>"}, {"m": "Slide 10 · 40 s · Does one Pro pay?", "say": "From 9.99, we lose 1.50 to the app store. 8 cents to payments. 39 cents to AI. 4 cents to server. We keep <em>7 dollars 98</em>. That is 80 percent. One monthly Pro pays for <em>62 free users</em>. So we break even when <em>1.6 percent</em> of users pay. The annual plan keeps 3.78 and breaks even at 3.3 percent. And five monthly Pros cover the whole server bill.<br><span style='color:#8C93A6'>How to read: Follow the chart left to right with your finger: grey, yellow, blue, red. The number to hit hard is 62. Pause after it. If asked why 15 percent store fee: 'Apple Small Business Program and Google Play both take 15 percent under one million dollars.'</span>"}, {"m": "Slide 11 · 35 s · At scale", "say": "What does the business look like at scale? The category median is 2.9 percent of users paying. At that rate we are profitable from <em>1,000 users</em>. At 10,000 users, about <em>1,000 dollars</em> a month of margin. At 100,000, about 10,000 dollars. Notice the biggest cost. It is the AI we give away to free users, not the Pros. So the lever is the free tier: which coach features stay free. What this table does not include: marketing and salaries. That is the honest next question.<br><span style='color:#8C93A6'>How to read: Point at the profit column only. Ignore the other columns unless asked. Say the last two lines with a straight face. Admitting what is missing is a strength here. If asked about team cost: 'That is the next study. This one is about the product paying for itself.'</span>"}, {"m": "Slide 12 · 30 s · The answer", "say": "So. Nobody owns the coach yet. The seat is open. Three bets. One: lead with the programme, not the log. A new user sees a full week before logging anything. Two: coach depth at the category's median price. Three: win beginners in their first six months. Barcelona first. The study says the market is real, and the margin is real. The next three weeks test whether beginners agree.<br><span style='color:#8C93A6'>How to read: Slow down. This is the last thing they remember. Three bets, three fingers. Same gesture, third time. The last sentence is honest and confident. No 'thank you' rush after it. Stop, breathe, then say thank you.</span>"}, {"m": "Slide 13 · 10 s · Sources", "say": "Every number on these slides has a source printed on the slide. Estimates are marked as estimates. Anything we could not trace to a primary source, we left out. Thank you.<br><span style='color:#8C93A6'>How to read: Leave this slide on screen during questions. If someone challenges a number, point at the footer of that slide and read the source out loud.</span>"}];
+(function () {
+  var NOTES = window.__NOTES__ || [];
+  var slides = [].slice.call(document.querySelectorAll('.slide')), cur = 0;
+  var elLbl = document.getElementById('lbl'), elProg = document.getElementById('prog'), notes = document.getElementById('notes');
+  var btnNotes = document.getElementById('btnNotes'), btnFull = document.getElementById('btnFull');
+  function show(i) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, n) { s.hidden = n !== cur; });
+    var cover = slides[cur].dataset.cover === '1';
+    elLbl.textContent = cover ? 'COVER' : ('SLIDE ' + cur + '/' + (slides.length - 1));
+    elProg.style.width = (cur / (slides.length - 1) * 100) + '%';
+    var n = NOTES[cur] || {};
+    document.getElementById('nmeta').textContent = n.m || '';
+    document.getElementById('nsay').innerHTML = n.say || '';
+  }
+  document.getElementById('stage').addEventListener('click', function () { show(cur + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(cur + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Home') show(0); else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'n' || e.key === 'N') btnNotes.click(); else if (e.key === 'f' || e.key === 'F') btnFull.click();
+  });
+  btnNotes.addEventListener('click', function () { var on = notes.hidden; notes.hidden = !on; btnNotes.setAttribute('aria-pressed', String(on)); });
+  btnFull.addEventListener('click', function () { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); });
+  var q = new URLSearchParams(location.search).get('s'); show(q ? parseInt(q, 10) || 0 : 0);
+  window.show = show;
+})();
+</script>
+
+</body></html>

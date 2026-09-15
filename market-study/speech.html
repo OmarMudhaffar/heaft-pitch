@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Heaft Market Study · Speech</title>
+<meta name="description" content="What to say on each slide of the Heaft market study, in easy English, with reading notes.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{--red:#E0424B;--red-deep:#B21F28;--blue:#3A7BD5;--yellow:#F0B323;--green:#2FA36B;
+ --bg:#F0F2F4;--card:#FFFFFF;--line:#E2E6EB;--t1:#0E1013;--t2:#5B6570;--t3:#8794A0;--soft:#F7D8DA;--ground2:#F6F7F9;
+ --sora:"Sora",system-ui,sans-serif;--inter:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B0E14;--card:#141821;--line:#232A37;--t1:#F2F4F8;--t2:#AEB6C2;--t3:#7E8896;--soft:#3A1418;--ground2:#1A1F2A;--red-deep:#F0626A}}
+:root[data-theme="dark"]{--bg:#0B0E14;--card:#141821;--line:#232A37;--t1:#F2F4F8;--t2:#AEB6C2;--t3:#7E8896;--soft:#3A1418;--ground2:#1A1F2A;--red-deep:#F0626A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--t1);font-family:var(--inter);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:720px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 10px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+header .mark{width:34px;height:34px;border-radius:9px;background:#0E1013;flex:none}
+header .mark svg{width:100%;height:100%}
+header .t{font-family:var(--sora);font-weight:800;font-size:15px;line-height:1.1}
+header .s{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+header select{margin-left:auto;font:inherit;font-size:14px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--t1);max-width:46%}
+h1{font-family:var(--sora);font-weight:800;font-size:clamp(28px,7vw,40px);line-height:1.05;letter-spacing:-.03em;margin:28px 0 8px;text-wrap:balance}
+.lede{color:var(--t2);margin:0 0 18px;font-size:17px}
+.howto{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:0 0 22px}
+.howto h2{margin:0 0 8px}
+.howto ol{margin:0;padding-left:20px;color:var(--t2)}
+.howto li{margin:4px 0}
+h2{font-family:var(--sora);font-weight:800;font-size:20px;letter-spacing:-.02em;margin:0}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red-deep);margin:0 0 6px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:0 0 28px}
+.num{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px}
+.num b{display:block;font-family:var(--sora);font-weight:800;font-size:26px;line-height:1;letter-spacing:-.03em;color:var(--red-deep);font-variant-numeric:tabular-nums}
+.num span{display:block;font-size:13px;line-height:1.35;color:var(--t2);margin-top:6px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 30px}
+.links a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;border-radius:12px;text-decoration:none;color:#fff;background:var(--red-deep)}
+.links a.alt{background:var(--card);color:var(--t1);border:1px solid var(--line)}
+section.ch{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;margin:0 0 18px;scroll-margin-top:84px}
+.chhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.chno{width:40px;height:40px;border-radius:12px;background:var(--red-deep);color:#fff;display:grid;place-items:center;font-family:var(--sora);font-weight:800;font-size:16px;flex:none}
+.chno.c{background:#0E1013}
+.chtitle{font-family:var(--sora);font-weight:800;font-size:20px;line-height:1.1;letter-spacing:-.02em}
+.chmeta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-top:2px}
+.speaker{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+.speaker input{font:inherit;font-size:13px;letter-spacing:0;text-transform:none;width:110px;border:0;border-bottom:1.5px dashed var(--t3);background:transparent;color:var(--t1);padding:2px 4px}
+.speaker input:focus{outline:none;border-bottom-color:var(--red)}
+.shot{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:12px;border:1px solid var(--line);margin:14px 0 16px;background:var(--ground2)}
+.say{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.say li{padding:9px 12px;border-radius:10px;background:var(--ground2);font-size:18px;line-height:1.4}
+.say li b{color:var(--red-deep);font-weight:700}
+.how{margin:14px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px;color:var(--t2);font-size:15px}
+.how li{position:relative;padding-left:22px}
+.how li::before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--yellow)}
+.rem{margin:14px 0 0;padding:10px 14px;border-radius:12px;background:var(--soft);color:var(--t1);font-family:var(--sora);font-weight:700;font-size:15px;display:flex;gap:10px;align-items:baseline}
+.rem span{font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-deep);white-space:nowrap}
+.lab{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin:16px 0 8px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 16px;margin:0 0 10px}
+summary{cursor:pointer;padding:14px 0;font-family:var(--sora);font-weight:700;font-size:16px;list-style:none;display:flex;gap:10px;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"Q";font-family:var(--mono);font-size:11px;color:var(--red-deep);letter-spacing:.1em;flex:none}
+details p{margin:0 0 14px;color:var(--t2)}
+footer{margin-top:34px;font-family:var(--mono);font-size:11.5px;color:var(--t3);line-height:1.6;border-top:1px solid var(--line);padding-top:14px}
+a:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+@media print{header.top,.links,select{display:none}section.ch{break-inside:avoid;box-shadow:none}body{padding:0}}
+</style>
+</head><body><div class="wrap">
+<header class="top"><div class="mark"><svg viewBox="120 120 784 784" aria-hidden="true"><rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/><rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/><rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/><rect x="226" y="490" width="572" height="45" rx="22" fill="#fff"/><circle cx="512" cy="512" r="29" fill="#0E1013"/></svg></div><div><div class="t">Heaft · Market Study</div><div class="s">The speech · about 12 minutes</div></div>
+<select id="jump" aria-label="Jump to a chapter"><option value="">Jump to…</option><option value="ch0">00 · Cover</option><option value="ch1">01 · The gap</option><option value="ch2">02 · Segmentation</option><option value="ch3">03 · Market size: TAM, SAM, SOM</option><option value="ch4">04 · The landscape</option><option value="ch5">05 · Pricing</option><option value="ch6">06 · Who makes money</option><option value="ch7">07 · Why nobody leads yet</option><option value="ch8">08 · What we do better</option><option value="ch9">09 · What one user costs us</option><option value="ch10">10 · Does one Pro pay?</option><option value="ch11">11 · At scale</option><option value="ch12">12 · The answer</option><option value="ch13">13 · Sources</option><option value="qa">Questions &amp; answers</option></select></header>
+
+<h1>What to say, slide by slide.</h1>
+<p class="lede">Easy English. Short lines. One number per slide. Read it on your phone, then say it without the phone.</p>
+
+<div class="howto"><h2>How to use this page</h2><ol>
+<li>Each chapter is one slide. Write your name in <b>Speaker</b> if it is yours.</li>
+<li><b>Say this</b> is the script. Bold numbers are the ones to say slowly.</li>
+<li><b>How to read it</b> tells you where to point, where to pause, what tone.</li>
+<li><b>Remember</b> is the one line to keep in your head if you forget everything else.</li>
+<li>Practise once with the script, once with only the Remember line, once with nothing.</li>
+</ol></div>
+
+<div class="eyebrow">The five numbers everyone must know</div>
+<div class="nums"><div class="num"><b>63%</b><span>of new gym members quit before month 3</span></div><div class="num"><b>$3B</b><span>Europe market. Spain is $282M. We aim for $1.1M</span></div><div class="num"><b>$9.99</b><span>our price = the category median</span></div><div class="num"><b>13¢ · 43¢</b><span>what a free user and a Pro user cost us per month</span></div><div class="num"><b>62</b><span>free users paid for by one monthly Pro</span></div></div>
+
+<div class="links"><a href="index.html">Open the deck</a><a class="alt" href="Heaft-Market-Study.pdf">Download the PDF</a></div>
+<section class="ch" id="ch0">
+<div class="chhead"><div class="chno c">C</div><div><div class="chtitle">Cover</div><div class="chmeta">Cover · 15 s</div></div>
+<label class="speaker">Speaker <input id="spk0" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-00.png" alt="Slide 0: Cover" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Hi. This is the Heaft market study.</li><li>We asked five questions.</li><li>Who do we serve? How big is the market?</li><li>Who do we compete with, and at what price?</li><li>What does one user cost us?</li><li>And why has nobody won this category yet?</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Stand still. Two seconds of silence before you start.</li><li>Count the five questions on your fingers. It helps you remember them.</li><li>Do not read the slide. Look at the audience.</li></ul>
+<div class="rem"><span>Remember</span>Five questions, five fingers.</div>
+</section>
+<section class="ch" id="ch1">
+<div class="chhead"><div class="chno">01</div><div><div class="chtitle">The gap</div><div class="chmeta">Slide 1 · 40 s</div></div>
+<label class="speaker">Speaker <input id="spk1" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-01.png" alt="Slide 1: The gap" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Three numbers.</li><li><b>63 percent</b> of new gym members quit before month three.</li><li>That is from a study of more than five thousand members.</li><li><b>54 percent</b> of beginners say they do not know where to start.</li><li>The thing that fixes both is a personal trainer.</li><li>But a trainer costs <b>35 to 40 euros an hour</b> in Barcelona.</li><li>The gym itself costs 38 euros a month.</li><li>So the people who need a coach most cannot pay for one.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Say each number, then stop for one second. Let it land.</li><li>Point at each big red number when you say it.</li><li>The last line is the whole slide. Say it slowly.</li><li>Do not add extra numbers. Three is enough.</li></ul>
+<div class="rem"><span>Remember</span>63 quit. 54 are lost. 40 euros an hour.</div>
+</section>
+<section class="ch" id="ch2">
+<div class="chhead"><div class="chno">02</div><div><div class="chtitle">Segmentation</div><div class="chmeta">Slide 2 · 35 s</div></div>
+<label class="speaker">Speaker <input id="spk2" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-02.png" alt="Slide 2: Segmentation" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>We segment by the problem, not by age.</li><li>Two primary segments.</li><li>One: beginners who need direction. 'I joined a gym, but I do not know what to do.'</li><li>Two: people who start and stop. 'I get motivated, then I lose the routine.'</li><li>These two overlap. Someone who needs a plan, and needs help sticking to it.</li><li>Everything else is secondary for now.</li><li>Alex is our example customer. 23, student, Barcelona, new at the gym.</li><li>We test this with 15 interviews before we spend on anything else.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Read the two quotes like a real person talking. Change your voice a little.</li><li>Point at the two red cards. Ignore the grey ones.</li><li>Say 'Alex' warmly. He is a person, not a chart.</li><li>'15 interviews' is the promise. Make it sound like a plan, not a hope.</li></ul>
+<div class="rem"><span>Remember</span>Two problems: no direction, no routine. Alex, 23, Barcelona.</div>
+</section>
+<section class="ch" id="ch3">
+<div class="chhead"><div class="chno">03</div><div><div class="chtitle">Market size: TAM, SAM, SOM</div><div class="chmeta">Slide 3 · 50 s</div></div>
+<label class="speaker">Speaker <input id="spk3" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-03.png" alt="Slide 3: Market size: TAM, SAM, SOM" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>We built the market from gym members, not from analyst reports.</li><li>Europe has <b>75 million</b> gym members.</li><li>The median fitness app costs 40 dollars a year.</li><li>75 million times 40 dollars is <b>3 billion dollars</b>. That is our TAM.</li><li>A top-down check agrees. Europe is 26 percent of the 12 billion global app market.</li><li>Spain is our SAM. <b>7 million</b> members, so <b>282 million dollars</b>.</li><li>And 2.75 million of them are new every year.</li><li>Our SOM, what we can really win by year three:</li><li>1 percent of those new members. <b>27,500 subscribers. 1.1 million dollars</b> a year.</li><li>It is a small number on purpose. It is a number we can defend.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>This is the hardest slide. Go slow. Three rings, three numbers, top to bottom.</li><li>Point at the big ring, then the blue ring, then the red circle. Do not jump around.</li><li>Say the multiplication out loud. People trust maths they can follow.</li><li>End on 'a number we can defend'. That line answers the question before anyone asks it.</li></ul>
+<div class="rem"><span>Remember</span>75 million × 40 dollars = 3 billion. Spain 282 million. We want 1.1 million.</div>
+</section>
+<section class="ch" id="ch4">
+<div class="chhead"><div class="chno">04</div><div><div class="chtitle">The landscape</div><div class="chmeta">Slide 4 · 45 s</div></div>
+<label class="speaker">Speaker <input id="spk4" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-04.png" alt="Slide 4: The landscape" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>This map shows price against how much the app coaches you.</li><li>Bottom left: loggers. Hevy and Strong. Four dollars. They record what you did.</li><li>Middle: generators. Fitbod, Alpha Progression, Juggernaut. 13 to 35 dollars.</li><li>They write workouts. But they do not talk to you, and they do not feed you.</li><li>Top right: humans. Future and Caliber. <b>200 dollars</b> a month.</li><li>Now look at the middle right. It is empty.</li><li>A full coach, at a normal app price. Nobody is there.</li><li>That is where Heaft sits. <b>9.99</b>.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Walk the map with your hand: bottom left, middle, top right, then the red dot.</li><li>Pause before 'It is empty'. That pause is the point of the slide.</li><li>Keep 'loggers, generators, humans' as three clear words. The audience will reuse them.</li><li>Do not name every dot. Three groups and one red dot.</li></ul>
+<div class="rem"><span>Remember</span>Loggers. Generators. Humans. The middle is empty.</div>
+</section>
+<section class="ch" id="ch5">
+<div class="chhead"><div class="chno">05</div><div><div class="chtitle">Pricing</div><div class="chmeta">Slide 5 · 35 s</div></div>
+<label class="speaker">Speaker <input id="spk5" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-05.png" alt="Slide 5: Pricing" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Here are the real prices, from the App Store, this week.</li><li>The loggers have free tiers. The generators mostly do not.</li><li>The benchmark for health and fitness apps is <b>9.99 a month</b>.</li><li>We price exactly at that median.</li><li>Fitbod raised its price to 15.99 in August. Zing is 18.99.</li><li>Our annual plan, 59.99, is above the 39.94 median. That is a deliberate test.</li><li>Same price as the market. More coach for it.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Do not read the table. Point at the red Heaft row and at the benchmark line at the bottom.</li><li>Say '9.99' twice: once for the benchmark, once for us. The repetition is the message.</li><li>If someone asks about the annual price, say: 'It is a test. We will lower it if the data says so.'</li></ul>
+<div class="rem"><span>Remember</span>9.99 is the median. We are the median, with more inside.</div>
+</section>
+<section class="ch" id="ch6">
+<div class="chhead"><div class="chno">06</div><div><div class="chtitle">Who makes money</div><div class="chmeta">Slide 6 · 30 s</div></div>
+<label class="speaker">Speaker <input id="spk6" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-06.png" alt="Slide 6: Who makes money" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Where is the money today? Food and running.</li><li>MyFitnessPal, <b>310 million</b> dollars, but shrinking.</li><li>Strava, <b>338 million</b>, and they bought Runna, a running coach.</li><li>Look at the yellow bars. No gym coaching app has passed <b>50 million</b>.</li><li>One more fact. In 2025 fitness apps earned 13 percent more money,</li><li>with almost no growth in downloads.</li><li>People are paying more, not more people.</li><li>The gym seat is open.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Point at the two long bars, then sweep your hand over the short yellow ones.</li><li>Say 'the gym seat is open' as a conclusion, not a slogan. Calm voice.</li><li>'est.' on the slide means estimate. If asked, say so honestly.</li></ul>
+<div class="rem"><span>Remember</span>Food 310. Running 338. Gym: nobody over 50.</div>
+</section>
+<section class="ch" id="ch7">
+<div class="chhead"><div class="chno">07</div><div><div class="chtitle">Why nobody leads yet</div><div class="chmeta">Slide 7 · 45 s</div></div>
+<label class="speaker">Speaker <input id="spk7" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-07.png" alt="Slide 7: Why nobody leads yet" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Four reasons the seat is still empty.</li><li>One. 'AI' is a label. <b>28 percent</b> of fitness apps now buy the word AI in the store.</li><li>Most of it is a quiz and a template.</li><li>Two. The market is split in three: loggers, generators, humans. Nobody does all three.</li><li>Three. Trust. Only <b>10 percent</b> of people prefer an AI coach today.</li><li>Future, the 199 dollar app, shut down its AI beta in June.</li><li>So our coach must prove itself in week one, with a real plan, not a chat box.</li><li>Four. Retention kills everyone. Day 30 retention is <b>3 to 4 percent</b>.</li><li>Whoever keeps beginners for six weeks, wins.</li><li>Runna proved it can be done for running. The gym version does not exist yet.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Count the four reasons on your fingers again. Same gesture as the cover. People remember gestures.</li><li>Reason three is the honest one. Do not rush it. Admitting the trust problem makes us credible.</li><li>Finish on Runna with energy. It is the proof, and it is the last thing they hear.</li><li>If you are short on time, cut reason two. The map already showed it.</li></ul>
+<div class="rem"><span>Remember</span>Label. Split. Trust. Retention. Then Runna.</div>
+</section>
+<section class="ch" id="ch8">
+<div class="chhead"><div class="chno">08</div><div><div class="chtitle">What we do better</div><div class="chmeta">Slide 8 · 35 s</div></div>
+<label class="speaker">Speaker <input id="spk8" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-08.png" alt="Slide 8: What we do better" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Feature by feature.</li><li>Green means it is in the product. Yellow means partly. A dash means not offered.</li><li>Look at the two rows nobody else has.</li><li>Nutrition that follows today's training.</li><li>And scanning a coach's written plan, from a PDF or a photo.</li><li>Everything in our column is shipped code, not a roadmap.</li><li>Others log, or generate. Heaft runs the whole loop.</li><li>Built, not finished.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Point at the red Heaft column first, then at the two rows with only one green dot.</li><li>'Built, not finished' is our honest line. Say it plainly. No apology, no boasting.</li><li>Do not defend every yellow dot for competitors. If challenged: 'That is what their own marketing claims.'</li></ul>
+<div class="rem"><span>Remember</span>Two rows nobody has: food follows training, scan a written plan.</div>
+</section>
+<section class="ch" id="ch9">
+<div class="chhead"><div class="chno">09</div><div><div class="chtitle">What one user costs us</div><div class="chmeta">Slide 9 · 45 s</div></div>
+<label class="speaker">Speaker <input id="spk9" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-09.png" alt="Slide 9: What one user costs us" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Now real numbers about cost.</li><li>A typical free user costs us <b>13 cents</b> a month.</li><li>About 9 cents of AI, 4 cents of server.</li><li>A typical Pro user costs <b>43 cents</b> a month.</li><li>150 coach messages, two programs, two plan scans, sixty meal photos.</li><li>Even a Pro who hits every daily limit, 1,500 messages, costs <b>2 dollars 89</b>.</li><li>Still far below the price.</li><li>These are today's list prices from Cerebras, Together and Google,</li><li>times the real size of our prompts.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Say '13 cents' and '43 cents' slowly. They are the two numbers people will quote later.</li><li>Point at the two boxes: left free, right Pro.</li><li>The worst case line is your safety net. If someone says 'AI is expensive', point at 2.89.</li><li>Do not explain tokens unless asked. If asked: 'A token is about three quarters of a word.'</li></ul>
+<div class="rem"><span>Remember</span>13 cents free. 43 cents Pro. Worst case 2.89.</div>
+</section>
+<section class="ch" id="ch10">
+<div class="chhead"><div class="chno">10</div><div><div class="chtitle">Does one Pro pay?</div><div class="chmeta">Slide 10 · 40 s</div></div>
+<label class="speaker">Speaker <input id="spk10" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-10.png" alt="Slide 10: Does one Pro pay?" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>From 9.99, we lose 1.50 to the app store.</li><li>8 cents to payments. 39 cents to AI. 4 cents to server.</li><li>We keep <b>7 dollars 98</b>. That is 80 percent.</li><li>One monthly Pro pays for <b>62 free users</b>.</li><li>So we break even when <b>1.6 percent</b> of users pay.</li><li>The annual plan keeps 3.78 and breaks even at 3.3 percent.</li><li>And five monthly Pros cover the whole server bill.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Follow the chart left to right with your finger: grey, yellow, blue, red.</li><li>The number to hit hard is 62. Pause after it.</li><li>If asked why 15 percent store fee: 'Apple Small Business Program and Google Play both take 15 percent under one million dollars.'</li></ul>
+<div class="rem"><span>Remember</span>Keep 7.98. One Pro feeds 62 free users. Break-even 1.6 percent.</div>
+</section>
+<section class="ch" id="ch11">
+<div class="chhead"><div class="chno">11</div><div><div class="chtitle">At scale</div><div class="chmeta">Slide 11 · 35 s</div></div>
+<label class="speaker">Speaker <input id="spk11" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-11.png" alt="Slide 11: At scale" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>What does the business look like at scale?</li><li>The category median is 2.9 percent of users paying.</li><li>At that rate we are profitable from <b>1,000 users</b>.</li><li>At 10,000 users, about <b>1,000 dollars</b> a month of margin.</li><li>At 100,000, about 10,000 dollars.</li><li>Notice the biggest cost. It is the AI we give away to free users, not the Pros.</li><li>So the lever is the free tier: which coach features stay free.</li><li>What this table does not include: marketing and salaries.</li><li>That is the honest next question.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Point at the profit column only. Ignore the other columns unless asked.</li><li>Say the last two lines with a straight face. Admitting what is missing is a strength here.</li><li>If asked about team cost: 'That is the next study. This one is about the product paying for itself.'</li></ul>
+<div class="rem"><span>Remember</span>Profitable from 1,000 users. The free tier is the lever.</div>
+</section>
+<section class="ch" id="ch12">
+<div class="chhead"><div class="chno">12</div><div><div class="chtitle">The answer</div><div class="chmeta">Slide 12 · 30 s</div></div>
+<label class="speaker">Speaker <input id="spk12" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-12.png" alt="Slide 12: The answer" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>So. Nobody owns the coach yet. The seat is open.</li><li>Three bets.</li><li>One: lead with the programme, not the log. A new user sees a full week before logging anything.</li><li>Two: coach depth at the category's median price.</li><li>Three: win beginners in their first six months. Barcelona first.</li><li>The study says the market is real, and the margin is real.</li><li>The next three weeks test whether beginners agree.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Slow down. This is the last thing they remember.</li><li>Three bets, three fingers. Same gesture, third time.</li><li>The last sentence is honest and confident. No 'thank you' rush after it. Stop, breathe, then say thank you.</li></ul>
+<div class="rem"><span>Remember</span>Programme first. Median price. Beginners first.</div>
+</section>
+<section class="ch" id="ch13">
+<div class="chhead"><div class="chno">13</div><div><div class="chtitle">Sources</div><div class="chmeta">Slide 13 · 10 s</div></div>
+<label class="speaker">Speaker <input id="spk13" type="text" placeholder="name" autocomplete="off"></label></div>
+<img class="shot" src="slides/slide-13.png" alt="Slide 13: Sources" loading="lazy" width="1280" height="720">
+<div class="lab">Say this</div>
+<ul class="say"><li>Every number on these slides has a source printed on the slide.</li><li>Estimates are marked as estimates.</li><li>Anything we could not trace to a primary source, we left out.</li><li>Thank you.</li></ul>
+<div class="lab">How to read it</div>
+<ul class="how"><li>Leave this slide on screen during questions.</li><li>If someone challenges a number, point at the footer of that slide and read the source out loud.</li></ul>
+<div class="rem"><span>Remember</span>Every number has a source on the slide.</div>
+</section>
+<div class="eyebrow" id="qa" style="margin-top:30px">Questions they will ask</div>
+<h2 style="margin-bottom:12px">Short answers, ready to say</h2>
+<details><summary>Why would anyone trust an AI coach?</summary><p>Today most do not: only 10 percent prefer one. That is why we lead with a real generated programme in week one, not a chat box. Trust comes from the plan working, not from the word AI.</p></details><details><summary>What about ChatGPT? It is free.</summary><p>ChatGPT does not know your last set, your programme or today's protein. Heaft's coach does, because it sits on top of your logs. The chat is the small part. The programme, the session and the food targets are the product.</p></details><details><summary>How did you get the 3 billion?</summary><p>75.5 million gym members in Europe, times 39.94 dollars, the median annual price of a fitness app. A top-down check gives 3.2 billion: 26 percent of the 12.3 billion global app market.</p></details><details><summary>Why is your SOM so small?</summary><p>On purpose. 1 percent of Spain's yearly new gym members is 27,500 subscribers. It is a number we can defend and measure. Bigger numbers need bigger evidence than we have.</p></details><details><summary>Why 9.99 and not cheaper, like Hevy?</summary><p>Hevy is a logger; loggers cannot charge more because the free tier already does the job. We are the category median, 9.99, and we carry coach features that the 13 to 35 dollar apps do not have.</p></details><details><summary>Is the AI cost really that low?</summary><p>Yes, at today's list prices. A coach message costs about 0.2 cents. Even a user who hits every daily limit costs 2.89 a month. Prices for these models have fallen every year.</p></details><details><summary>What is not in the cost table?</summary><p>Marketing and salaries. This study shows that the product pays for itself per user. The team cost is the next study.</p></details><details><summary>Fitbod already has 15 million downloads. Why can you win?</summary><p>Fitbod generates workouts and stops. No dialogue, no nutrition, and it just raised prices 20 percent. We are not fighting Fitbod on generating. We are the coach that runs the whole loop.</p></details><details><summary>Future tried AI and stopped. Does that not prove it fails?</summary><p>Future sells human coaching at 199 dollars. Their members paid for a person and got software; of course they complained. Our users start with software at 9.99. Different promise, different price.</p></details>
+<footer>Speech and notes for the Heaft market study, HTE401, September 2026. Every figure quoted here is sourced on the matching slide. Names typed in the Speaker fields stay on this phone only.</footer>
+</div>
+<script>
+(function(){var j=document.getElementById('jump');j.addEventListener('change',function(){if(j.value){var el=document.getElementById(j.value);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}});
+try{document.querySelectorAll('.speaker input').forEach(function(i){var k='heaft-speaker-'+i.id;var v=localStorage.getItem(k);if(v)i.value=v;i.addEventListener('input',function(){try{localStorage.setItem(k,i.value)}catch(e){}});});}catch(e){}
+})();
+</script>
+</body></html>
