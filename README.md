@@ -16,8 +16,10 @@ still printed on every slide. **N** = presenter notes, **F** = fullscreen.
 - `market-study/short/Heaft-Market-Study-Short.pdf` — the 5 slides as a PDF (6 pages with the cover).
 
 **Business model (for investors):** https://omarmudhaffar.github.io/heaft-pitch/business/
-Going live in Barcelona, how we judge a channel, our first trainer, what one subscriber costs us,
-three years, and who owns the company. **N** = presenter notes, **F** = fullscreen.
+The go-to-market: who we go after, what we say, the three routes into Barcelona, our first
+trainer and what one coach is worth, how we judge a channel, the first ninety days, and what one
+subscriber leaves us. The three-year projection and the shares sit **after the close slide**, as
+backup to open only if asked (press End). **N** = presenter notes, **F** = fullscreen.
 - `business/index.html` — the deck, and the source of truth.
 - `business/Heaft-Business-Model.pdf` — the same slides as a PDF. Rebuild it after any edit:
   `python3 tools/build_pdf.py business/index.html business/Heaft-Business-Model.pdf`
