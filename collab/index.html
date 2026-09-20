@@ -151,9 +151,9 @@
   .drow .i{font-family:var(--mono);font-size:1.1cqw;letter-spacing:.1em;color:var(--t3)}
   .drow .k{font-family:var(--sora);font-weight:800;font-size:2.4cqw;line-height:1.1}
   .drow .v{font-family:var(--inter);font-size:1.6cqw;color:var(--t2);text-align:right}
-  .docft{border-top:1px solid var(--line);padding-top:1.8cqh;font-family:var(--inter);
-         font-size:1.5cqw;color:var(--t3)}
-  .stamp{position:absolute;right:3.4cqw;bottom:.4cqh;transform:rotate(-11deg);
+  /* the build system animates transform, so the stamp's tilt lives on a wrapper */
+  .stampwrap{position:absolute;right:3.4cqw;bottom:.4cqh}
+  .stamp{display:inline-block;transform:rotate(-11deg);
          border:.3cqw solid var(--plate25);color:var(--plate25);border-radius:.7cqw;
          font-family:var(--sora);font-weight:800;font-size:2.3cqw;letter-spacing:.14em;
          padding:.9cqh 1.5cqw;background:rgba(255,255,255,.92)}
@@ -317,9 +317,8 @@
         <div class="drow" data-build="2"><span class="i">01</span><span class="k">We called him</span><span class="v">25 minutes, voice</span></div>
         <div class="drow" data-build="3"><span class="i">02</span><span class="k">We sent the terms</span><span class="v">heaft.app/coach</span></div>
         <div class="drow" data-build="4"><span class="i">03</span><span class="k">He accepted them</span><span class="v">20% of every subscription &middot; 0% of his courses</span></div>
-        <div class="docft" data-build="5">Binding nothing today. Signed on the day we launch &mdash; with nothing left to negotiate.</div>
       </div>
-      <div class="stamp" data-build="5">ACCEPTED</div>
+      <div class="stampwrap" data-build="5"><div class="stamp">ACCEPTED</div></div>
     </div>
   </div>
 </section>
@@ -343,7 +342,7 @@ window.__NOTES__ = [
 
 {"m":"Slide 4 \u00b7 35 s \u00b7 What he brings \u00b7 5 clicks","say":"So what is he worth? <em>If two in every hundred</em> of his followers join \u2014 and two per cent is deliberately low for an audience that already trusts him \u2014 [click] that is <em>five hundred members.</em> [click] At ten euros a month, <em>five thousand euros a month.</em> [click] <em>One thousand</em> to Ali. <em>Four thousand</em> to us. Every month. [click] And remember he is <em>one</em> coach. <em>Ten like him and the company pays for itself</em> — and we now have the form, the terms and a list of who to call next.<br><span style=\'color:#8C93A6\'>How to read: BE HONEST \u2014 two in a hundred is our assumption, not a measurement. Say the word &quot;if&quot;. Exact figure is 488, rounded to 500. EXPECT: &quot;your study was about Spain&quot; \u2014 yes, and this is on top of it, not instead.</span>"},
 
-{"m":"Slide 5 \u00b7 30 s \u00b7 Agreed \u00b7 5 clicks","say":"And this is not a plan we are hoping for. [click] <em>We called him. Twenty-five minutes.</em> [click] We sent him the terms \u2014 they are on our site, anyone can read them. [click] <em>He accepted.</em> Twenty per cent of every subscription, nothing off his own courses. [click] Nothing is binding today. It gets signed the day we launch \u2014 <em>and by then there is nothing left to argue about.</em><br><span style=\'color:#8C93A6\'>How to read: This is the slide that separates us from every team presenting an idea. Say &quot;we called him&quot; slowly. Do not oversell the stamp \u2014 it is a pre-agreement and the deck says so.</span>"}
+{"m":"Slide 5 \u00b7 30 s \u00b7 Agreed \u00b7 5 clicks","say":"And this is not a plan we are hoping for. [click] <em>We called him. Twenty-five minutes.</em> [click] We sent him the terms \u2014 they are on our site, anyone can read them. [click] <em>He accepted.</em> Twenty per cent of every subscription, nothing off his own courses. [click] <em>Accepted.</em><br><span style=\'color:#8C93A6\'>How to read: This is the slide that separates us from every team presenting an idea. Say &quot;we called him&quot; slowly. Do not oversell the stamp \u2014 it is a pre-agreement and the deck says so.</span>"}
 ];
 (function () {
   var NOTES = window.__NOTES__ || [];
