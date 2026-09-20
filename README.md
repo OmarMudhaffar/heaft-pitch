@@ -15,10 +15,10 @@ still printed on every slide. **N** = presenter notes, **F** = fullscreen.
 - `market-study/short/index.html` — the deck, and the source of truth. There is no build step.
 - `market-study/short/Heaft-Market-Study-Short.pdf` — the 5 slides as a PDF (6 pages with the cover).
 
-**Business model (for investors):** https://omarmudhaffar.github.io/heaft-pitch/business/
-The go-to-market: the three routes into Barcelona, our first trainer and what one coach is worth,
-how we judge a channel, the first ninety days, and what one subscriber leaves us. The three-year projection and the shares sit **after the close slide**, as
-backup to open only if asked (press End). **N** = presenter notes, **F** = fullscreen.
+**Go-to-market (for the business presentation):** https://omarmudhaffar.github.io/heaft-pitch/business/
+Six slides that carry the spoken go-to-market talk: Ali our first creator, creators-ads-results,
+what one subscriber costs, the three-year creator plan, the shares, and the close. The slides are
+visual support — the words live in the presenter notes (**N**), which hold the speech itself.
 - `business/index.html` — the deck, and the source of truth.
 - `business/Heaft-Business-Model.pdf` — the same slides as a PDF. Rebuild it after any edit:
   `python3 tools/build_pdf.py business/index.html business/Heaft-Business-Model.pdf`
