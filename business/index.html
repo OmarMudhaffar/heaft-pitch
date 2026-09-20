@@ -111,6 +111,39 @@
 
   .dark{background:var(--ink);color:#fff}
   .dark h2 em{color:var(--red-lt)}
+  /* phone remote: the same page, with #remote in the URL */
+  body.remote{background:#0A0C10;padding:0}
+  body.remote .bar,body.remote .rail,body.remote .frame,body.remote .notes{display:none!important}
+  .rmt{display:none}
+  body.remote .rmt{display:flex;flex-direction:column;gap:14px;height:100dvh;
+                   padding:16px 16px calc(16px + env(safe-area-inset-bottom));color:#E9EDF5}
+  .rmt .top{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.68rem;
+            letter-spacing:.14em;text-transform:uppercase;color:#8A93A6;flex:none}
+  .rmt .dot{width:8px;height:8px;border-radius:50%;background:#E0424B;flex:none}
+  .rmt .dot.on{background:#2FA36B}
+  .rmt .card{flex:1;min-height:0;overflow:auto;background:#121A26;border:1px solid #1E2A3A;
+             border-radius:16px;padding:16px 16px 20px;font-size:1.06rem;line-height:1.6;color:#C7CDDA;
+             -webkit-overflow-scrolling:touch}
+  .rmt .card .m{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+                color:#8A93A6;margin-bottom:10px}
+  .rmt .card em{color:#fff;font-style:normal;font-weight:600}
+  .rmt .pads{display:grid;grid-template-columns:1fr 2fr;gap:12px;flex:none}
+  .rmt button{font-family:var(--sora);font-weight:800;font-size:1.15rem;border:0;border-radius:16px;
+              padding:26px 10px;color:#fff;background:#1B2432;-webkit-tap-highlight-color:transparent;
+              touch-action:manipulation;cursor:pointer}
+  .rmt button.next{background:var(--red)}
+  .rmt button:active{filter:brightness(1.18)}
+
+  /* the QR that puts the remote on a phone */
+  .qr{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(6,8,12,.86);
+      padding:24px;cursor:zoom-out}
+  .qr[hidden]{display:none!important}
+  .qr .box{background:#fff;border-radius:20px;padding:22px 22px 16px;display:flex;flex-direction:column;
+           align-items:center;gap:12px;max-width:min(78vw,420px)}
+  .qr svg{width:min(60vw,300px);height:auto;display:block}
+  .qr .u{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:#5A646F;text-align:center;
+         word-break:break-all}
+
   .notes{border-top:1px solid #161B26;padding:12px 18px 14px;display:grid;gap:6px;color:#C7CDDA;
          font-size:.94rem;line-height:1.55;max-height:26vh;overflow:auto}
   .notes .m{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#8A93A6}
@@ -124,6 +157,7 @@
   <button id="btnNotes" aria-pressed="false">Notes (N)</button>
   <button id="btnFull">Fullscreen (F)</button>
   <a class="lnk" href="../market-study/short/">Market opportunity</a>
+  <button id="btnQR">Remote (R)</button>
   <a class="lnk" href="Heaft-Business-Model.pdf">PDF</a>
   <span class="hint">&larr; &rarr; one step &middot; &uarr; &darr; whole slide</span>
 </div>
@@ -184,6 +218,17 @@
 
 </div></div>
 
+<div class="qr" id="qr" hidden><div class="box"><svg viewBox="0 0 37 37" shape-rendering="crispEdges" aria-label="QR code to the phone remote"><rect width="37" height="37" fill="#fff"/><path d="M2 2h7v1h-7zM11 2h1v1h-1zM15 2h1v1h-1zM18 2h4v1h-4zM23 2h3v1h-3zM28 2h7v1h-7zM2 3h1v1h-1zM8 3h1v1h-1zM12 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM28 3h1v1h-1zM34 3h1v1h-1zM2 4h1v1h-1zM4 4h3v1h-3zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h2v1h-2zM18 4h1v1h-1zM21 4h1v1h-1zM23 4h1v1h-1zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM2 5h1v1h-1zM4 5h3v1h-3zM8 5h1v1h-1zM10 5h5v1h-5zM16 5h1v1h-1zM19 5h2v1h-2zM24 5h3v1h-3zM28 5h1v1h-1zM30 5h3v1h-3zM34 5h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM8 6h1v1h-1zM10 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM17 6h1v1h-1zM19 6h3v1h-3zM23 6h3v1h-3zM28 6h1v1h-1zM30 6h3v1h-3zM34 6h1v1h-1zM2 7h1v1h-1zM8 7h1v1h-1zM10 7h3v1h-3zM14 7h1v1h-1zM17 7h3v1h-3zM22 7h3v1h-3zM28 7h1v1h-1zM34 7h1v1h-1zM2 8h7v1h-7zM10 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM18 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM28 8h7v1h-7zM10 9h1v1h-1zM12 9h2v1h-2zM16 9h3v1h-3zM20 9h2v1h-2zM23 9h3v1h-3zM2 10h1v1h-1zM4 10h5v1h-5zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h3v1h-3zM19 10h1v1h-1zM22 10h1v1h-1zM24 10h3v1h-3zM28 10h5v1h-5zM4 11h3v1h-3zM9 11h1v1h-1zM11 11h1v1h-1zM13 11h2v1h-2zM20 11h4v1h-4zM25 11h1v1h-1zM28 11h2v1h-2zM31 11h2v1h-2zM34 11h1v1h-1zM2 12h2v1h-2zM5 12h1v1h-1zM7 12h5v1h-5zM17 12h1v1h-1zM19 12h2v1h-2zM22 12h3v1h-3zM26 12h1v1h-1zM30 12h1v1h-1zM32 12h2v1h-2zM4 13h1v1h-1zM6 13h2v1h-2zM11 13h4v1h-4zM16 13h1v1h-1zM23 13h4v1h-4zM30 13h3v1h-3zM3 14h4v1h-4zM8 14h2v1h-2zM11 14h2v1h-2zM17 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM24 14h1v1h-1zM26 14h2v1h-2zM30 14h2v1h-2zM34 14h1v1h-1zM2 15h1v1h-1zM4 15h2v1h-2zM9 15h1v1h-1zM15 15h2v1h-2zM18 15h1v1h-1zM21 15h6v1h-6zM28 15h1v1h-1zM31 15h4v1h-4zM2 16h1v1h-1zM4 16h2v1h-2zM8 16h1v1h-1zM11 16h1v1h-1zM13 16h2v1h-2zM16 16h2v1h-2zM19 16h1v1h-1zM22 16h3v1h-3zM26 16h3v1h-3zM31 16h3v1h-3zM2 17h1v1h-1zM4 17h2v1h-2zM7 17h1v1h-1zM9 17h4v1h-4zM14 17h1v1h-1zM16 17h3v1h-3zM21 17h1v1h-1zM23 17h1v1h-1zM26 17h3v1h-3zM30 17h3v1h-3zM2 18h1v1h-1zM5 18h10v1h-10zM17 18h1v1h-1zM19 18h1v1h-1zM24 18h2v1h-2zM27 18h1v1h-1zM29 18h2v1h-2zM34 18h1v1h-1zM3 19h1v1h-1zM6 19h1v1h-1zM9 19h2v1h-2zM13 19h4v1h-4zM18 19h1v1h-1zM20 19h4v1h-4zM25 19h1v1h-1zM28 19h2v1h-2zM31 19h2v1h-2zM34 19h1v1h-1zM6 20h3v1h-3zM10 20h1v1h-1zM16 20h5v1h-5zM28 20h3v1h-3zM32 20h2v1h-2zM3 21h1v1h-1zM5 21h1v1h-1zM9 21h1v1h-1zM11 21h2v1h-2zM16 21h3v1h-3zM20 21h5v1h-5zM26 21h2v1h-2zM29 21h6v1h-6zM4 22h1v1h-1zM7 22h5v1h-5zM13 22h1v1h-1zM15 22h1v1h-1zM17 22h3v1h-3zM22 22h1v1h-1zM24 22h1v1h-1zM26 22h2v1h-2zM29 22h3v1h-3zM33 22h2v1h-2zM2 23h1v1h-1zM6 23h1v1h-1zM10 23h2v1h-2zM14 23h2v1h-2zM18 23h5v1h-5zM25 23h1v1h-1zM27 23h3v1h-3zM32 23h1v1h-1zM34 23h1v1h-1zM2 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM11 24h5v1h-5zM17 24h2v1h-2zM20 24h1v1h-1zM22 24h2v1h-2zM27 24h3v1h-3zM31 24h3v1h-3zM2 25h1v1h-1zM4 25h1v1h-1zM7 25h1v1h-1zM9 25h4v1h-4zM14 25h2v1h-2zM18 25h1v1h-1zM22 25h2v1h-2zM25 25h4v1h-4zM31 25h2v1h-2zM2 26h1v1h-1zM4 26h2v1h-2zM7 26h3v1h-3zM13 26h1v1h-1zM15 26h1v1h-1zM18 26h2v1h-2zM24 26h1v1h-1zM26 26h5v1h-5zM33 26h2v1h-2zM10 27h3v1h-3zM14 27h1v1h-1zM16 27h1v1h-1zM18 27h1v1h-1zM21 27h2v1h-2zM26 27h1v1h-1zM30 27h1v1h-1zM32 27h1v1h-1zM34 27h1v1h-1zM2 28h7v1h-7zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h2v1h-2zM23 28h1v1h-1zM25 28h2v1h-2zM28 28h1v1h-1zM30 28h1v1h-1zM32 28h1v1h-1zM2 29h1v1h-1zM8 29h1v1h-1zM10 29h8v1h-8zM21 29h6v1h-6zM30 29h5v1h-5zM2 30h1v1h-1zM4 30h3v1h-3zM8 30h1v1h-1zM10 30h1v1h-1zM12 30h2v1h-2zM15 30h1v1h-1zM19 30h1v1h-1zM24 30h1v1h-1zM26 30h6v1h-6zM33 30h2v1h-2zM2 31h1v1h-1zM4 31h3v1h-3zM8 31h1v1h-1zM10 31h2v1h-2zM14 31h1v1h-1zM16 31h1v1h-1zM18 31h1v1h-1zM20 31h4v1h-4zM25 31h3v1h-3zM30 31h5v1h-5zM2 32h1v1h-1zM4 32h3v1h-3zM8 32h1v1h-1zM10 32h1v1h-1zM12 32h1v1h-1zM14 32h1v1h-1zM17 32h2v1h-2zM23 32h1v1h-1zM25 32h1v1h-1zM28 32h2v1h-2zM2 33h1v1h-1zM8 33h1v1h-1zM11 33h3v1h-3zM16 33h3v1h-3zM20 33h5v1h-5zM27 33h1v1h-1zM30 33h3v1h-3zM2 34h7v1h-7zM10 34h1v1h-1zM12 34h5v1h-5zM19 34h1v1h-1zM21 34h1v1h-1zM24 34h3v1h-3zM29 34h1v1h-1zM31 34h1v1h-1zM33 34h1v1h-1z" fill="#0E1013"/></svg><div class="u">omarmudhaffar.github.io/heaft-pitch/business/#remote</div></div></div>
+
+<div class="rmt" aria-label="Presenter remote">
+  <div class="top"><span class="dot" id="rdot"></span><span id="rpos">CONNECTING</span></div>
+  <div class="card"><div class="m" id="rmeta"></div><div id="rsay"></div></div>
+  <div class="pads">
+    <button id="rprev" aria-label="Previous step">&larr; Back</button>
+    <button id="rnext" class="next" aria-label="Next step">Next &rarr;</button>
+  </div>
+</div>
+
 <div class="notes" id="notes" hidden>
   <div class="m" id="nmeta"></div>
   <div id="nsay"></div>
@@ -237,6 +282,7 @@ window.__NOTES__ = [
     var n = NOTES[cur] || {};
     document.getElementById('nmeta').textContent = n.m || '';
     document.getElementById('nsay').innerHTML = n.say || '';
+    paintRemote();
   }
   function go(d) {
     if (d > 0) {
@@ -247,9 +293,56 @@ window.__NOTES__ = [
       else if (cur > 0) { cur--; step = steps(cur); } else return;
     }
     paint();
+    send();
   }
-  function jump(i) { cur = Math.max(0, Math.min(slides.length - 1, i)); step = 1; paint(); }
-  document.getElementById('stage').addEventListener('click', function () { go(1); });
+  function jump(i) { cur = Math.max(0, Math.min(slides.length - 1, i)); step = 1; paint(); send(); }
+
+  // ---- phone remote: the laptop listens, the phone drives, both through one RTDB key ----
+  var DB = 'https://heaft-app-default-rtdb.firebaseio.com';
+  var room = (location.search.match(/[?&]r=([\w-]{1,24})/) || [, 'biz'])[1];
+  var PATH = DB + '/decks/' + room + '.json';
+  var isRemote = /remote/i.test(location.hash);
+  var applying = false, dot = document.getElementById('rdot');
+
+  function send() {
+    if (applying) return;
+    fetch(PATH, { method: 'PUT', body: JSON.stringify({ c: cur, s: step, t: Date.now() }) })
+      .catch(function () {});
+  }
+  function receive(ev) {
+    var msg; try { msg = JSON.parse(ev.data); } catch (e) { return; }
+    var d = msg && msg.data; if (!d || typeof d.c !== 'number') return;
+    if (d.c === cur && d.s === step) return;
+    applying = true;
+    cur = Math.max(0, Math.min(slides.length - 1, d.c));
+    step = Math.max(1, Math.min(steps(cur), d.s || 1));
+    paint();
+    applying = false;
+  }
+  function connect() {
+    var es;
+    try { es = new EventSource(PATH); } catch (e) { return; }
+    es.addEventListener('put', receive);
+    es.addEventListener('patch', receive);
+    es.onopen = function () { if (dot) dot.classList.add('on'); };
+    es.onerror = function () { if (dot) dot.classList.remove('on'); };
+  }
+  function paintRemote() {
+    if (!isRemote) return;
+    var n = NOTES[cur] || {};
+    document.getElementById('rpos').textContent =
+      (slides[cur].dataset.cover === '1' ? 'COVER' : 'SLIDE ' + cur) + '  \u00b7  ' + step + '/' + steps(cur);
+    document.getElementById('rmeta').textContent = n.m || '';
+    document.getElementById('rsay').innerHTML = n.say || '';
+  }
+  if (isRemote) {
+    document.body.classList.add('remote');
+    document.getElementById('rprev').addEventListener('click', function () { go(-1); });
+    document.getElementById('rnext').addEventListener('click', function () { go(1); });
+  } else {
+    document.getElementById('stage').addEventListener('click', function () { go(1); });
+  }
+  connect();
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(1); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
@@ -258,12 +351,18 @@ window.__NOTES__ = [
     else if (e.key === 'Home') jump(0);
     else if (e.key === 'End') jump(slides.length - 1);
     else if (e.key === 'n' || e.key === 'N') btnNotes.click();
+    else if (e.key === 'r' || e.key === 'R') toggleQR();
     else if (e.key === 'f' || e.key === 'F') btnFull.click();
   });
   btnNotes.addEventListener('click', function () {
     var on = notes.hidden; notes.hidden = !on;
     btnNotes.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
+  var qr = document.getElementById('qr'), btnQR = document.getElementById('btnQR');
+  function toggleQR() { qr.hidden = !qr.hidden; }
+  btnQR.addEventListener('click', toggleQR);
+  qr.addEventListener('click', toggleQR);
+
   btnFull.addEventListener('click', function () {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen();

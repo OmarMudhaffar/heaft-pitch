@@ -1,7 +1,7 @@
 # Heaft — pitch deck and market study
 
 **Pitch deck:** https://omarmudhaffar.github.io/heaft-pitch/next/
-Arrow keys or click to move · **F** fullscreen · phone remote: add `#remote` to the URL.
+Arrow keys or click to move · **F** fullscreen. (No phone remote on this one — only the business deck has it.)
 
 **Market study (Sep 2026):** https://omarmudhaffar.github.io/heaft-pitch/market-study/
 - `market-study/index.html` — the deck (laptop). **N** = presenter notes, **F** = fullscreen.
@@ -21,6 +21,11 @@ gym partnerships later), Ali as the first proof point, unit economics, the three
 ownership, and the close. The slides are
 visual support — the words live in the presenter notes (**N**), which hold the speech itself.
 - `business/index.html` — the deck, and the source of truth.
+- **Phone remote:** press **R** on the laptop for a QR, or open
+  https://omarmudhaffar.github.io/heaft-pitch/business/#remote on the phone. The phone shows the
+  script for the slide that is up and drives the laptop; both ends talk through one Firebase RTDB
+  key (`/decks/biz`), so the laptop needs no extension and the phone needs no app. A second room:
+  add `?r=<name>` to **both** URLs — worth doing if anyone in the room might know the default.
 - `business/Heaft-Business-Model.pdf` — the same slides as a PDF. Rebuild it after any edit:
   `python3 tools/build_pdf.py business/index.html business/Heaft-Business-Model.pdf`
 - `collab/index.html` — the two-slide version of the trainer deal, for showing a coach.
