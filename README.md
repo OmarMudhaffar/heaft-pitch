@@ -14,3 +14,11 @@ the verdict. Built for an audience of students: pictures first, one number per p
 still printed on every slide. **N** = presenter notes, **F** = fullscreen.
 - `market-study/short/index.html` — the deck, and the source of truth. There is no build step.
 - `market-study/short/Heaft-Market-Study-Short.pdf` — the 5 slides as a PDF (6 pages with the cover).
+
+**Business model (for investors):** https://omarmudhaffar.github.io/heaft-pitch/business/
+Going live in Barcelona, how we judge a channel, our first trainer, what one subscriber costs us,
+three years, and who owns the company. **N** = presenter notes, **F** = fullscreen.
+- `business/index.html` — the deck, and the source of truth.
+- `business/Heaft-Business-Model.pdf` — the same slides as a PDF. Rebuild it after any edit:
+  `python3 tools/build_pdf.py business/index.html business/Heaft-Business-Model.pdf`
+- `collab/index.html` — the two-slide version of the trainer deal, for showing a coach.
