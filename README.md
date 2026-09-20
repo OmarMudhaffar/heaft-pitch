@@ -7,3 +7,10 @@ Arrow keys or click to move · **F** fullscreen · phone remote: add `#remote` t
 - `market-study/index.html` — the deck (laptop). **N** = presenter notes, **F** = fullscreen.
 - `market-study/speech.html` — the speech, slide by slide, in easy English, with reading notes. Made for phones.
 - `market-study/Heaft-Market-Study.pdf` — the same 17 slides as a PDF.
+
+**Short version, for presenting (5 slides):** https://omarmudhaffar.github.io/heaft-pitch/market-study/short/
+The same study cut to one chart per point — the problem, the market, the competitors, the money,
+the verdict. Built for an audience of students: pictures first, one number per picture, sources
+still printed on every slide. **N** = presenter notes, **F** = fullscreen.
+- `market-study/short/index.html` — the deck, and the source of truth. There is no build step.
+- `market-study/short/Heaft-Market-Study-Short.pdf` — the 5 slides as a PDF (6 pages with the cover).

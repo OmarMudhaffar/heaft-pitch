@@ -1,15 +1,98 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Heaft</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0E14">
+<title>Heaft &middot; Decks</title>
+<meta name="description" content="The Heaft presentations: market opportunity, the full market study, and the pitch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-  html,body{height:100%;margin:0;background:#0B0E14;color:#E9EDF5;
-    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    display:grid;place-items:center;text-align:center}
-  a{color:#1FD98A}
+  *{box-sizing:border-box}
+  :root{--ink:#0B0E14;--card:#121A26;--line:#1E2A3A;--line2:#2B3A4D;
+        --t1:#EDF1F7;--t2:#93A0B2;--t3:#5F6C7E;--red:#E0424B;--red-dim:rgba(224,66,75,.14)}
+  body{margin:0;min-height:100dvh;background:var(--ink);color:var(--t1);
+       font-family:Inter,system-ui,-apple-system,sans-serif;
+       padding:44px 20px 56px;-webkit-font-smoothing:antialiased}
+  .wrap{width:100%;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:30px}
+  .head{display:flex;align-items:center;gap:15px}
+  .mark{width:46px;height:46px;border-radius:13px;background:#0F1722;flex:none;display:block}
+  h1{font-family:Sora,sans-serif;font-weight:800;font-size:1.55rem;letter-spacing:.07em;margin:0}
+  .sub{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.2em;
+       text-transform:uppercase;color:var(--red);margin:3px 0 0}
+  .list{display:flex;flex-direction:column;gap:13px}
+  a.row{display:block;padding:19px 20px;border-radius:16px;background:var(--card);
+        border:1px solid var(--line);color:inherit;text-decoration:none;transition:.16s}
+  a.row:hover{border-color:var(--line2);background:#151E2C}
+  a.row:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+  a.row.lead{border-color:rgba(224,66,75,.42);background:linear-gradient(180deg,var(--red-dim),transparent 62%),var(--card)}
+  .rt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .rt b{font-family:Sora,sans-serif;font-weight:800;font-size:1.08rem;letter-spacing:-.005em}
+  .tag{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--red);border:1px solid rgba(224,66,75,.42);
+       border-radius:99px;padding:3px 9px}
+  .rd{color:var(--t2);font-size:.92rem;line-height:1.5;margin:7px 0 0}
+  .meta{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.11em;
+        color:var(--t3);margin-top:11px;display:flex;gap:9px;flex-wrap:wrap}
+  .meta span::after{content:" ·";color:var(--line2)}
+  .meta span:last-child::after{content:""}
+  .foot{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.16em;
+        text-transform:uppercase;color:var(--t3);border-top:1px solid var(--line);padding-top:18px}
 </style>
-<script>location.replace('next/' + (location.hash || ''));</script>
 </head><body>
-<p>Heaft — <a href="next/">open the pitch</a></p>
+<div class="wrap">
+
+  <div class="head">
+    <svg class="mark" viewBox="120 120 784 784" aria-hidden="true">
+      <rect x="169" y="329" width="91" height="365" rx="28" fill="#646B7C"/>
+      <rect x="764" y="329" width="91" height="365" rx="28" fill="#646B7C"/>
+      <rect x="260" y="260" width="92" height="503" rx="28" fill="#8A93A6"/>
+      <rect x="672" y="260" width="92" height="503" rx="28" fill="#8A93A6"/>
+      <rect x="352" y="169" width="93" height="686" rx="28" fill="#E51218"/>
+      <rect x="579" y="169" width="93" height="686" rx="28" fill="#E51218"/>
+      <rect x="226" y="490" width="572" height="45" rx="22" fill="#fff"/>
+    </svg>
+    <div><h1>HEAFT</h1><p class="sub">Presentations</p></div>
+  </div>
+
+  <div class="list">
+
+    <a class="row lead" href="market-study/short/">
+      <div class="rt"><b>Market opportunity</b><span class="tag">Present this</span></div>
+      <p class="rd">Five slides. One sentence and one picture each: the problem, who we serve,
+         how big it is, why it is still open, and what only we do.</p>
+      <div class="meta"><span>5 slides</span><span>~3 min</span><span>PDF inside</span></div>
+    </a>
+
+    <a class="row" href="market-study/short/guide.html">
+      <div class="rt"><b>Slide guide</b></div>
+      <p class="rd">The one-page crib sheet for the five slides &mdash; what each one says and
+         how to read it out loud.</p>
+      <div class="meta"><span>1 page</span></div>
+    </a>
+
+    <a class="row" href="market-study/">
+      <div class="rt"><b>Market study, in full</b></div>
+      <p class="rd">The long version the five slides were cut from. Sources, unit economics,
+         customer acquisition cost and what the company costs to run.</p>
+      <div class="meta"><span>17 slides</span><span>Speech notes</span><span>PDF</span></div>
+    </a>
+
+    <a class="row" href="next/">
+      <div class="rt"><b>The pitch</b></div>
+      <p class="rd">Three minutes: the problem, what Heaft is, the brand, the landing page
+         and the team.</p>
+      <div class="meta"><span>7 slides</span><span>~3 min</span></div>
+    </a>
+
+    <a class="row" href="links/">
+      <div class="rt"><b>Contact</b></div>
+      <p class="rd">Where to find Omar and Heaft.</p>
+    </a>
+
+  </div>
+
+  <p class="foot">Harbour.Space &middot; Barcelona</p>
+</div>
 </body></html>
