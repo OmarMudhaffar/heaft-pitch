@@ -165,6 +165,12 @@
             letter-spacing:.14em;text-transform:uppercase;color:#8A93A6;flex:none}
   .rmt .dot{width:8px;height:8px;border-radius:50%;background:#E0424B;flex:none}
   .rmt .dot.on{background:#2FA36B}
+  .rmt .view{flex:none;border-radius:12px;overflow:hidden;background:#fff;
+             box-shadow:0 0 0 1px #1E2A3A}
+  body.remote .rmt .view .stage{width:100%;border-radius:0;box-shadow:none;cursor:default}
+  .rmt .nxt{flex:none;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+            color:#8A93A6;margin-top:-4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rmt .nxt b{color:#E9EDF5;font-weight:500;letter-spacing:.04em;text-transform:none;font-family:var(--sora)}
   .rmt .card{flex:1;min-height:0;overflow:auto;background:#121A26;border:1px solid #1E2A3A;
              border-radius:16px;padding:16px 16px 20px;font-size:1.06rem;line-height:1.6;color:#C7CDDA;
              -webkit-overflow-scrolling:touch}
@@ -562,6 +568,8 @@
 
 <div class="rmt" aria-label="Presenter remote">
   <div class="top"><span class="dot" id="rdot"></span><span id="rpos">CONNECTING</span><span class="grow"></span><button id="rfull" class="tog" aria-pressed="false">Full script</button></div>
+  <div class="view" id="rview"></div>
+  <div class="nxt" id="rnxt"></div>
   <div class="card"><div class="m" id="rmeta"></div><div id="rsay"></div></div>
   <div class="pads">
     <button id="rprev" aria-label="Previous step">&larr; Back</button>
@@ -679,19 +687,30 @@ window.__NOTES__ = [
     es.onopen = function () { if (dot) dot.classList.add('on'); };
     es.onerror = function () { if (dot) dot.classList.remove('on'); };
   }
+  function h2text(sl) {
+    var h = sl.querySelector('h2'); if (!h) return '';
+    var t = document.createElement('div'); t.innerHTML = h.innerHTML.replace(/<br\s*\/?>/gi, ' ');
+    return t.textContent.replace(/\s+/g, ' ').trim();
+  }
   function paintRemote() {
     if (!isRemote) return;
     var n = NOTES[cur] || {};
     document.getElementById('rpos').textContent =
       (slides[cur].dataset.cover === '1' ? 'COVER' : 'SLIDE ' + cur) + '  \u00b7  ' + step + '/' + steps(cur);
     document.getElementById('rmeta').textContent = n.m || '';
+    var nx = step < steps(cur) ? 'next click, same slide'
+      : cur < slides.length - 1 ? h2text(slides[cur + 1]) || 'next slide' : 'end of deck';
+    document.getElementById('rnxt').innerHTML = 'Next &rsaquo; <b></b>';
+    document.getElementById('rnxt').querySelector('b').textContent = nx;
     document.getElementById('rsay').innerHTML = (!showFull && n.cue)
       ? '<ul class="cues"><li>' + n.cue.join('</li><li>') + '</li></ul>'
       : (n.say || '');
   }
+  var stageEl = document.getElementById('stage'), stageHome = stageEl.parentNode;
   function applyMode() {
     isRemote = /remote/i.test(location.hash);
     document.body.classList.toggle('remote', isRemote);
+    (isRemote ? document.getElementById('rview') : stageHome).appendChild(stageEl);
     paint();
   }
   document.getElementById('rfull').addEventListener('click', function () {
