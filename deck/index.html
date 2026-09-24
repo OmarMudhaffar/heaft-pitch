@@ -162,6 +162,23 @@
   @keyframes beat{0%{transform:scale(1);filter:none}6%{transform:scale(1.14);filter:drop-shadow(0 0 14px rgba(206,46,56,.55))}
                    22%,100%{transform:scale(1);filter:none}}
   @media (prefers-reduced-motion:reduce){.loop .sweep.on,.loop .sweep.on ~ g .nd{animation:none}}
+  /* how people find us: boxes slide in, roads draw toward Heaft, users flow along them */
+  .fu .slidein[data-build]{transform:translateX(-3cqw)}
+  .fu .slidein[data-build].on{transform:none}
+  .fu .draw[data-build]{transform:none;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+    transition:stroke-dashoffset 1.1s cubic-bezier(.6,0,.2,1),opacity .2s;transition-delay:var(--d,0s)}
+  .fu .draw[data-build].on{stroke-dashoffset:0}
+  .fu .flow[data-build]{transform:none;stroke-dasharray:.1 26;stroke-opacity:.9}
+  .fu .flow.on{animation:flow 1.1s linear infinite}
+  .fu .flow.slow.on{animation-duration:2.2s}
+  @keyframes flow{to{stroke-dashoffset:-26.1}}
+  .fu .pop[data-build]{transform:scale(.55);transform-box:fill-box;transform-origin:50% 50%;
+    transition:transform .75s cubic-bezier(.34,1.56,.64,1),opacity .3s}
+  .fu .pop[data-build].on{transform:none}
+  .fu .pulse[data-build]{transform-box:fill-box;transform-origin:50% 50%;transform:none}
+  .fu .pulse.on{animation:pulse 2.6s ease-out infinite;animation-delay:.9s;opacity:0}
+  @keyframes pulse{0%{transform:scale(1);opacity:.28}100%{transform:scale(1.32);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.fu .flow.on,.fu .pulse.on{animation:none}}
   .dark{background:var(--ink);color:#fff}
   .dark h2 em{color:var(--red-lt)}
   /* phone remote: the same page, with #remote in the URL */
@@ -506,23 +523,26 @@
 <section class="slide">
   <div class="pad">
     <h2 data-build="1">How people <em>find us</em>.</h2>
-    <div class="hero"><svg viewBox="0 0 1060 380" role="img" aria-label="Two roads into Heaft. A wide red road: they see Heaft in a short video on TikTok or Instagram, four of every five subscribers. A thin grey road: a coach they already follow tells them to try it, one in five. Both end at Heaft, seven euros a month.">
-  <g data-build="2" style="--d:0s">
-    <path d="M420 112 C600 112 640 186 790 186" stroke="#CE2E38" stroke-opacity=".22" stroke-width="120" fill="none"/>
+    <div class="hero"><svg class="fu" viewBox="0 0 1060 380" role="img" aria-label="Two roads into Heaft. A wide red road from TikTok and Instagram, four of every five subscribers. A thin grey road from creators, one in five. Both end at Heaft, seven euros a month.">
+  <path class="draw" d="M420 112 C600 112 640 186 790 186" stroke="#CE2E38" stroke-opacity=".22" stroke-width="120" fill="none" data-build="2" style="--d:.35s;--len:380"/>
+  <path class="draw" d="M420 290 C600 290 640 214 790 214" stroke="#97A1AB" stroke-opacity=".35" stroke-width="30" fill="none" data-build="3" style="--d:.35s;--len:380"/>
+  <path class="flow" d="M420 112 C600 112 640 186 790 186" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none" data-build="4" style="--d:.6s"/>
+  <path class="flow slow" d="M420 290 C600 290 640 214 790 214" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" data-build="4" style="--d:.6s"/>
+  <g class="slidein" data-build="2" style="--d:0s">
     <rect x="0" y="28" width="420" height="168" rx="18" fill="#CE2E38"/>
     <text x="34" y="70" style="font-family:JetBrains Mono,monospace;letter-spacing:.18em;font-size:13px;fill:#fff" fill-opacity=".8">TIKTOK + INSTAGRAM</text>
     <text x="34" y="124" style="font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:29px;fill:#fff">They see it on their feed</text>
     <text x="34" y="162" style="font-family:Inter,sans-serif;font-size:18px;fill:#fff" fill-opacity=".9">a short video, around &euro;1 a download</text>
-    <text x="590" y="146" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:30px;fill:#CE2E38">4 in 5</text>
   </g>
-  <g data-build="3" style="--d:0s">
-    <path d="M420 290 C600 290 640 214 790 214" stroke="#97A1AB" stroke-opacity=".35" stroke-width="30" fill="none"/>
+  <text x="590" y="114" text-anchor="middle" data-build="2" style="--d:1.3s;font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:30px;fill:#CE2E38">4 in 5</text>
+  <g class="slidein" data-build="3" style="--d:0s">
     <rect x="0" y="238" width="420" height="104" rx="18" fill="#0E1013" fill-opacity=".05" stroke="#0E1013" stroke-opacity=".18"/>
     <text x="34" y="276" style="font-family:JetBrains Mono,monospace;letter-spacing:.18em;font-size:13px;fill:#5A646F">CREATORS</text>
     <text x="34" y="318" style="font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:26px;fill:#0E1013">&ldquo;Try this app.&rdquo;</text>
-    <text x="560" y="336" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:24px;fill:#5A646F">1 in 5</text>
   </g>
-  <g data-build="4" style="--d:0s">
+  <text x="560" y="336" text-anchor="middle" data-build="3" style="--d:1.3s;font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:24px;fill:#5A646F">1 in 5</text>
+  <circle class="pulse" cx="905" cy="200" r="130" fill="#0E1013" data-build="4" style="--d:.7s"/>
+  <g class="pop" data-build="4" style="--d:0s">
     <circle cx="905" cy="200" r="130" fill="#0E1013"/>
     <text x="905" y="196" text-anchor="middle" style="font-family:Sora,sans-serif;font-weight:800;letter-spacing:-.03em;font-size:44px;fill:#fff">Heaft</text>
     <text x="905" y="236" text-anchor="middle" style="font-family:Inter,sans-serif;font-size:20px;fill:#fff" fill-opacity=".8">&euro;7 a month</text>
