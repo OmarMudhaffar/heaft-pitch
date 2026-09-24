@@ -461,7 +461,7 @@
   <button id="btnNotes" aria-pressed="false">Notes (N)</button>
   <button id="btnFull">Fullscreen (F)</button>
   
-  <button id="btnQR">Remote (R)</button>
+  <button id="btnQR">Remote (R)</button> <button id="btnMusic" aria-pressed="true">Music (M)</button>
   <a class="lnk" href="Heaft-Pitch-Deck.pdf">PDF</a>
   <span class="hint">&larr; &rarr; one step &middot; &uarr; &darr; whole slide</span>
 </div>
@@ -724,6 +724,7 @@ window.__NOTES__ = [
     document.getElementById('nmeta').textContent = n.m || '';
     document.getElementById('nsay').innerHTML = n.say || '';
     paintRemote();
+    if (typeof syncMusic === "function" && bg) syncMusic();
   }
   function go(d) {
     if (d > 0) {
@@ -744,6 +745,34 @@ window.__NOTES__ = [
   var PATH = DB + '/decks/' + room + '.json';
   var isRemote = /remote/i.test(location.hash);
   var applying = false, showFull = false, dot = document.getElementById('rdot');
+
+  // ---- background music: from slide 2, very low, laptop only ----
+  var MUSIC_FROM = 2, musicVol = 0.07, musicOn = true, fadeT = null;
+  var bg = new Audio('music.mp3'); bg.loop = true; bg.preload = 'auto'; bg.volume = 0;
+  var btnMusic = document.getElementById('btnMusic');
+  function fadeTo(v, ms) {
+    clearInterval(fadeT);
+    var from = bg.volume, t0 = Date.now();
+    fadeT = setInterval(function () {
+      var k = Math.min(1, (Date.now() - t0) / ms);
+      bg.volume = Math.max(0, Math.min(1, from + (v - from) * k));
+      if (k >= 1) { clearInterval(fadeT); if (v === 0) bg.pause(); }
+    }, 50);
+  }
+  function syncMusic() {
+    if (isRemote) { bg.pause(); return; }
+    if (musicOn && cur >= MUSIC_FROM) {
+      if (bg.paused) { var p = bg.play(); if (p && p.catch) p.catch(function () {}); }
+      fadeTo(musicVol, bg.volume < 0.01 ? 3000 : 400);
+    } else if (!bg.paused) fadeTo(0, 1200);
+    if (btnMusic) btnMusic.setAttribute('aria-pressed', musicOn ? 'true' : 'false');
+  }
+  // browsers only allow sound after a click or key press on this page
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    document.addEventListener(ev, function () { if (bg.paused) syncMusic(); });
+  });
+  function toggleMusic() { musicOn = !musicOn; syncMusic(); }
+  if (btnMusic) btnMusic.addEventListener('click', toggleMusic);
 
   function send() {
     if (applying) return;
@@ -815,6 +844,9 @@ window.__NOTES__ = [
     else if (e.key === 'n' || e.key === 'N') btnNotes.click();
     else if (e.key === 'r' || e.key === 'R') toggleQR();
     else if (e.key === 'f' || e.key === 'F') btnFull.click();
+    else if (e.key === 'm' || e.key === 'M') toggleMusic();
+    else if (e.key === ']') { musicVol = Math.min(0.3, musicVol + 0.02); syncMusic(); }
+    else if (e.key === '[') { musicVol = Math.max(0.01, musicVol - 0.02); syncMusic(); }
   });
   btnNotes.addEventListener('click', function () {
     var on = notes.hidden; notes.hidden = !on;
