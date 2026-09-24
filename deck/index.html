@@ -221,6 +221,23 @@
   @media (prefers-reduced-motion:reduce){.live.on i{animation:none}}
   .bigicon{width:15cqw;height:15cqw;border-radius:3.4cqw;display:block;margin-bottom:4cqh;box-shadow:0 2cqh 5cqh rgba(0,0,0,.45)}
   .reset [data-build]{transition:none!important}
+  /* the ask: one equation, then three years */
+  .ask{align-items:center;gap:6cqh}
+  .eq{display:flex;align-items:center;justify-content:center;gap:1.1cqw;flex-wrap:nowrap}
+  .eqc{display:flex;flex-direction:column;align-items:center;gap:.6cqh;padding:1.8cqh 1.4cqw;border-radius:1.4cqw;
+       background:#F4F6F8;border:.12cqw solid #E6EAEE;min-width:8cqw}
+  .eqc b{font-family:var(--sora);font-weight:800;font-size:2.4cqw;letter-spacing:-.03em;color:var(--ink);white-space:nowrap}
+  .eqc span{font-family:var(--mono);font-size:.85cqw;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+  .eqc.big{background:var(--ink);border-color:var(--ink)}.eqc.big b{color:#fff}.eqc.big span{color:#97A1AB}
+  .eqc.key{background:#1F9D5A;border-color:#1F9D5A}.eqc.key b{color:#fff}.eqc.key span{color:rgba(255,255,255,.8)}
+  .eqo{font-family:var(--sora);font-weight:800;font-size:2.6cqw;color:var(--t3)}
+  .yrs{display:flex;align-items:center;justify-content:center;gap:2cqw}
+  .yrl{font-family:var(--sora);font-weight:700;font-size:1.6cqw;color:var(--t2);margin-right:1cqw}
+  .yr{display:flex;flex-direction:column;align-items:center;padding:1.4cqh 2cqw;border-radius:1.2cqw;border:.12cqw solid #E6EAEE}
+  .yr span{font-family:var(--mono);font-size:.9cqw;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+  .yr b{font-family:var(--sora);font-weight:800;font-size:2.2cqw;color:var(--ink)}
+  .yr i{font-style:normal;font-size:1cqw;color:var(--t3)}
+  .yrm{font-family:var(--sora);font-weight:700;font-size:1.6cqw;color:#1F9D5A;margin-left:1cqw}
   .dark{background:var(--ink);color:#fff}
   .dark h2 em{color:var(--red-lt)}
   /* phone remote: the same page, with #remote in the URL */
@@ -641,6 +658,15 @@
 
 
 
+<section class="slide">
+  <div class="pad">
+    <h2 data-build="1">We raise <em>&euro;50k</em>.</h2>
+    <div class="hero ask"><div class="eq"><div class="eqc big" data-build="1" style="--d:0.15s"><b>&euro;50,000</b><span>we raise</span></div><div class="eqo" data-build="1" style="--d:0.3s">&minus;</div><div class="eqc " data-build="1" style="--d:0.4s"><b>&euro;1,000</b><span>servers &amp; deployment</span></div><div class="eqo" data-build="1" style="--d:0.5s">&minus;</div><div class="eqc " data-build="1" style="--d:0.6s"><b>&euro;500</b><span>ads</span></div><div class="eqo" data-build="1" style="--d:0.7s">=</div><div class="eqc " data-build="1" style="--d:0.8s"><b>&euro;48,500</b><span>for the team</span></div><div class="eqo" data-build="1" style="--d:0.9s">&divide;</div><div class="eqc " data-build="1" style="--d:1.0s"><b>5</b><span>people</span></div><div class="eqo" data-build="1" style="--d:1.1s">=</div><div class="eqc key" data-build="1" style="--d:1.2s"><b>&euro;9,700</b><span>each</span></div></div>
+      <div class="yrs"><div class="yrl" data-build="1" style="--d:1.4s">&euro;9,700 over three years</div><div class="yr" data-build="1" style="--d:1.45s"><span>Year 1</span><b>&euro;3,233</b><i>each</i></div><div class="yr" data-build="1" style="--d:1.55s"><span>Year 2</span><b>&euro;3,233</b><i>each</i></div><div class="yr" data-build="1" style="--d:1.65s"><span>Year 3</span><b>&euro;3,233</b><i>each</i></div>
+        <div class="yrm" data-build="1" style="--d:1.8s">&asymp; &euro;269 a month each</div></div></div>
+  </div>
+</section>
+
 <section class="slide dark">
   <div class="pad" style="justify-content:center">
     <div class="closegrid">
@@ -695,6 +721,8 @@ window.__NOTES__ = [
 {"m": "Slide 9 \u00b7 30 s \u00b7 Unit economics \u00b7 no clicks", "say": "What does one customer mean for us? <em>Seven euros a month.</em> About <em>one euro forty-five</em> is what that user costs us. We keep <em>five euros fifty-five</em> &mdash; seventy-nine per cent, every month they stay.<br><span style='color:#8C93A6'>How to read: Three numbers, one per click. If asked what the \u20ac1.45 is: the app store's 15% (\u20ac1.05) and servers (\u20ac0.40).</span>", "cue": ["<b>\u20ac7</b> a month", "<b>\u2212\u20ac1.45</b> what a user costs us", "<b>\u20ac5.55</b> kept \u00b7 <b>79%</b>", "If asked: store 15% + servers"]},
 
 {"m": "Slide 10 \u00b7 55 s \u00b7 Three-year projection \u00b7 no clicks", "say": "Here is the whole plan in numbers. Most of our users come from <em>creators</em> &mdash; four in every five; ads bring the rest. About <em>six in every hundred</em> downloads pay &mdash; ten thousand subscribers by year three, and money in goes <em>sixteen thousand, a hundred and fifteen thousand, four hundred and seventy-five thousand euros</em>. Servers and development cost us about <em>ten thousand a year</em>, which leaves a <em>gross profit</em> of <em>four hundred and sixty-five thousand</em> in year three. Then salaries &mdash; nobody paid in year one, one person in year two, three in year three &mdash; the ads, and the office and equipment. So we are <em>profitable every year</em>, and <em>three hundred and twenty-six thousand euros</em> in year three. <em>These are projections, not results.</em><br><span style='color:#8C93A6'>How to read: Read the bold rows: money in, gross profit, profit. Churn: 3% a month against a 7.2% category average.</span>", "cue": ["Creators bring <b>4 in 5</b> users", "Money in <b>16k \u2192 115k \u2192 475k</b>", "Gross profit <b>6k \u2192 105k \u2192 465k</b>", "Salaries <b>0 \u2192 1 \u2192 3</b> paid", "Profit <b>4k \u2192 64k \u2192 326k</b>", "Say <b>projection</b>"]},
+
+{"m": "Slide 11 \u00b7 30 s \u00b7 The ask \u00b7 no clicks", "say": "We are raising <em>fifty thousand euros</em>. A thousand goes to servers and deployment, five hundred to ads, and the rest &mdash; <em>forty-eight thousand five hundred</em> &mdash; is split between the five of us: <em>nine thousand seven hundred each</em>. Over three years that is about <em>3,233 euros a year each</em> &mdash; roughly 269 a month. We are not raising to pay ourselves salaries; we are raising to keep five people building full time.<br><span style='color:#8C93A6'>How to read: The equation builds itself left to right. Say the first and last number: fifty thousand in, nine thousand seven hundred each.</span>", "cue": ["Raise <b>\u20ac50,000</b>", "\u2212 <b>\u20ac1,000</b> servers & deployment \u00b7 \u2212 <b>\u20ac500</b> ads", "<b>\u20ac48,500</b> \u00f7 5 = <b>\u20ac9,700</b> each", "Over 3 years \u2248 <b>\u20ac3,233/yr</b> \u00b7 <b>\u20ac269/mo</b> each"]},
 
 {"m": "Close \u00b7 20 s \u00b7 no clicks", "say": "So: a coach that plans, trains and adapts, built and live, a signed first partner, and a plan that is profitable by year three. <em>You bring the passion. We bring the plan.</em> Scan the code &mdash; Heaft is live at heaft.app.<br><span style='color:#8C93A6'>How to read: Land the slogan and stop talking. Leave the QR up while they ask questions.</span>", "cue": ["Built \u00b7 signed partner \u00b7 a plan", "<b>You bring the passion.</b>", "<b>We bring the plan.</b>", "QR \u2192 <b>heaft.app</b>"]}
 ];
