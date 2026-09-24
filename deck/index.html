@@ -251,6 +251,8 @@
   .rmt button.next{background:var(--red)}
   .rmt button:active{filter:brightness(1.18)}
 
+  .mhint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;background:#CE2E38;color:#fff;
+         font:600 13px/1 system-ui,sans-serif;padding:10px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
   /* the QR that puts the remote on a phone */
   .qr{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(6,8,12,.86);
       padding:24px;cursor:zoom-out}
@@ -747,7 +749,7 @@ window.__NOTES__ = [
   var applying = false, showFull = false, dot = document.getElementById('rdot');
 
   // ---- background music: from slide 2, very low, laptop only ----
-  var MUSIC_FROM = 2, musicVol = 0.07, musicOn = true, fadeT = null;
+  var MUSIC_FROM = 2, musicVol = 0.2, musicOn = true, fadeT = null;
   var bg = new Audio('music.mp3'); bg.loop = true; bg.preload = 'auto'; bg.volume = 0;
   var btnMusic = document.getElementById('btnMusic');
   function fadeTo(v, ms) {
@@ -762,7 +764,7 @@ window.__NOTES__ = [
   function syncMusic() {
     if (isRemote) { bg.pause(); return; }
     if (musicOn && cur >= MUSIC_FROM) {
-      if (bg.paused) { var p = bg.play(); if (p && p.catch) p.catch(function () {}); }
+      if (bg.paused) { var p = bg.play(); if (p && p.catch) p.catch(function () { musicHint(true); }); if (p && p.then) p.then(function () { musicHint(false); }); }
       fadeTo(musicVol, bg.volume < 0.01 ? 3000 : 400);
     } else if (!bg.paused) fadeTo(0, 1200);
     if (btnMusic) btnMusic.setAttribute('aria-pressed', musicOn ? 'true' : 'false');
@@ -771,6 +773,9 @@ window.__NOTES__ = [
   ['pointerdown', 'keydown'].forEach(function (ev) {
     document.addEventListener(ev, function () { if (bg.paused) syncMusic(); });
   });
+  var hint = document.createElement('div'); hint.className = 'mhint'; hint.hidden = true;
+  hint.textContent = 'Click anywhere to start the music'; document.body.appendChild(hint);
+  function musicHint(on) { hint.hidden = !on || isRemote; }
   function toggleMusic() { musicOn = !musicOn; syncMusic(); }
   if (btnMusic) btnMusic.addEventListener('click', toggleMusic);
 
@@ -845,8 +850,8 @@ window.__NOTES__ = [
     else if (e.key === 'r' || e.key === 'R') toggleQR();
     else if (e.key === 'f' || e.key === 'F') btnFull.click();
     else if (e.key === 'm' || e.key === 'M') toggleMusic();
-    else if (e.key === ']') { musicVol = Math.min(0.3, musicVol + 0.02); syncMusic(); }
-    else if (e.key === '[') { musicVol = Math.max(0.01, musicVol - 0.02); syncMusic(); }
+    else if (e.key === ']') { musicVol = Math.min(0.8, musicVol + 0.05); syncMusic(); }
+    else if (e.key === '[') { musicVol = Math.max(0.02, musicVol - 0.05); syncMusic(); }
   });
   btnNotes.addEventListener('click', function () {
     var on = notes.hidden; notes.hidden = !on;
