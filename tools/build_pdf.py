@@ -21,6 +21,7 @@ EXPORT = """
   [data-build]{opacity:1!important;transform:none!important;transition:none!important}
   .draw{stroke-dashoffset:0!important}
   .flow,.pulse{display:none!important}
+  .cnt{--n:var(--to)!important;transition:none!important}
 """
 pages = "\n".join(f'<div class="stage">{s}</div>' for s in slides)
 doc = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
