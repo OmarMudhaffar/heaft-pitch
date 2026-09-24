@@ -28,7 +28,7 @@ doc = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
        f'<style>{style}{EXPORT}</style></head><body>{pages}</body></html>')
 tmp = out.with_suffix('.print.html'); tmp.write_text(doc)
 subprocess.run(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-                '--headless', '--disable-gpu', '--no-pdf-header-footer',
+                '--headless=new', '--disable-gpu', '--no-pdf-header-footer',
                 '--virtual-time-budget=20000', f'--print-to-pdf={out}',
                 f'file://{tmp.resolve()}'], check=True,
                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
