@@ -244,11 +244,6 @@
   .cues li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:2px;background:#E0424B}
   .cues b{color:#fff;font-weight:700}
   .rmt .card em{color:#fff;font-style:normal;font-weight:600}
-  .rmt .mus{display:flex;align-items:center;gap:8px;flex:none}
-  .rmt .mus button{padding:12px 16px;font-size:1rem;border-radius:12px;background:#1B2432}
-  .rmt .mus .mtog{flex:1}
-  .rmt .mus .mtog[aria-pressed="false"]{background:#2FA36B}
-  .rmt .mus span{min-width:3.2em;text-align:center;font-family:var(--mono);color:#E9EDF5;font-size:1rem}
   .rmt .pads{display:grid;grid-template-columns:1fr 2fr;gap:12px;flex:none}
   .rmt button{font-family:var(--sora);font-weight:800;font-size:1.15rem;border:0;border-radius:16px;
               padding:26px 10px;color:#fff;background:#1B2432;-webkit-tap-highlight-color:transparent;
@@ -256,8 +251,6 @@
   .rmt button.next{background:var(--red)}
   .rmt button:active{filter:brightness(1.18)}
 
-  .mhint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;background:#CE2E38;color:#fff;
-         font:600 13px/1 system-ui,sans-serif;padding:10px 16px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
   /* the QR that puts the remote on a phone */
   .qr{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(6,8,12,.86);
       padding:24px;cursor:zoom-out}
@@ -468,7 +461,7 @@
   <button id="btnNotes" aria-pressed="false">Notes (N)</button>
   <button id="btnFull">Fullscreen (F)</button>
   
-  <button id="btnQR">Remote (R)</button> <button id="btnMusic" aria-pressed="true">Music (M)</button>
+  <button id="btnQR">Remote (R)</button>
   <a class="lnk" href="Heaft-Pitch-Deck.pdf">PDF</a>
   <span class="hint">&larr; &rarr; one step &middot; &uarr; &darr; whole slide</span>
 </div>
@@ -661,10 +654,6 @@
   <div class="view" id="rview"></div>
   <div class="nxt" id="rnxt"></div>
   <div class="card"><div class="m" id="rmeta"></div><div id="rsay"></div></div>
-  <div class="mus">
-    <button id="rmus" class="mtog" aria-pressed="true">Stop music</button>
-    <button id="rmdn" aria-label="Music quieter">&minus;</button><span id="rmlv">2%</span><button id="rmup" aria-label="Music louder">+</button>
-  </div>
   <div class="pads">
     <button id="rprev" aria-label="Previous step">&larr; Back</button>
     <button id="rnext" class="next" aria-label="Next step">Next &rarr;</button>
@@ -735,7 +724,6 @@ window.__NOTES__ = [
     document.getElementById('nmeta').textContent = n.m || '';
     document.getElementById('nsay').innerHTML = n.say || '';
     paintRemote();
-    if (typeof syncMusic === "function" && bg) syncMusic();
   }
   function go(d) {
     if (d > 0) {
@@ -756,61 +744,6 @@ window.__NOTES__ = [
   var PATH = DB + '/decks/' + room + '.json';
   var isRemote = /remote/i.test(location.hash);
   var applying = false, showFull = false, dot = document.getElementById('rdot');
-
-  // ---- background music: from slide 2, very low, laptop only ----
-  var MUSIC_FROM = 2, musicLv = 2, musicOn = true, fadeT = null;
-  var LEVELS = [1, 2, 3, 4, 6, 8, 10, 15, 20, 30];   // percent; level 2 = 2%, barely there
-  function pct() { return LEVELS[musicLv - 1]; }
-  var bg = new Audio('music.mp3'); bg.loop = true; bg.preload = 'auto'; bg.volume = 0;
-  var btnMusic = document.getElementById('btnMusic');
-  function fadeTo(v, ms) {
-    clearInterval(fadeT);
-    var from = bg.volume, t0 = Date.now();
-    fadeT = setInterval(function () {
-      var k = Math.min(1, (Date.now() - t0) / ms);
-      bg.volume = Math.max(0, Math.min(1, from + (v - from) * k));
-      if (k >= 1) { clearInterval(fadeT); if (v === 0) bg.pause(); }
-    }, 50);
-  }
-  function paintMusic() {
-    if (btnMusic) { btnMusic.setAttribute('aria-pressed', musicOn ? 'true' : 'false'); btnMusic.textContent = 'Music ' + (musicOn ? pct() + '%' : 'off') + ' (M)'; }
-    var rm = document.getElementById('rmus'), rl = document.getElementById('rmlv');
-    if (rm) { rm.textContent = musicOn ? 'Stop music' : 'Play music'; rm.setAttribute('aria-pressed', musicOn ? 'true' : 'false'); }
-    if (rl) rl.textContent = musicOn ? pct() + '%' : '\u2013';
-  }
-  function syncMusic() {
-    paintMusic();
-    if (isRemote) { bg.pause(); return; }
-    if (musicOn && cur >= MUSIC_FROM) {
-      if (bg.paused) { var p = bg.play(); if (p && p.catch) p.catch(function () { musicHint(true); }); if (p && p.then) p.then(function () { musicHint(false); }); }
-      fadeTo(pct() / 100, bg.volume < 0.01 ? 3000 : 400);
-    } else if (!bg.paused) fadeTo(0, 1200);
-  }
-
-  // browsers only allow sound after a click or key press on this page
-  ['pointerdown', 'keydown'].forEach(function (ev) {
-    document.addEventListener(ev, function () { if (bg.paused) syncMusic(); });
-  });
-  var hint = document.createElement('div'); hint.className = 'mhint'; hint.hidden = true;
-  hint.textContent = 'Click anywhere to start the music'; document.body.appendChild(hint);
-  function musicHint(on) { hint.hidden = !on || isRemote; }
-  var MPATH = DB + '/decks/' + room + '-music.json', mApplying = false;
-  function sendMusic() {
-    if (mApplying) return;
-    fetch(MPATH, { method: 'PUT', body: JSON.stringify({ on: musicOn, lv: musicLv, t: Date.now() }) }).catch(function () {});
-  }
-  function setMusic(on, lv) { musicOn = on; musicLv = Math.max(1, Math.min(10, lv)); syncMusic(); sendMusic(); }
-  function toggleMusic() { setMusic(!musicOn, musicLv); }
-  try {
-    var mes = new EventSource(MPATH);
-    var onM = function (ev) {
-      var m; try { m = JSON.parse(ev.data); } catch (e) { return; }
-      var d = m && m.data; if (!d || typeof d.lv !== 'number') return;
-      mApplying = true; musicOn = !!d.on; musicLv = Math.max(1, Math.min(10, d.lv)); syncMusic(); mApplying = false;
-    };
-    mes.addEventListener('put', onM); mes.addEventListener('patch', onM);
-  } catch (e) {}
-  if (btnMusic) btnMusic.addEventListener('click', toggleMusic);
 
   function send() {
     if (applying) return;
@@ -866,9 +799,6 @@ window.__NOTES__ = [
     this.setAttribute('aria-pressed', showFull ? 'true' : 'false');
     paintRemote();
   });
-  document.getElementById('rmus').addEventListener('click', function () { toggleMusic(); });
-  document.getElementById('rmdn').addEventListener('click', function () { setMusic(true, musicLv - 1); });
-  document.getElementById('rmup').addEventListener('click', function () { setMusic(true, musicLv + 1); });
   document.getElementById('rprev').addEventListener('click', function () { go(-1); });
   document.getElementById('rnext').addEventListener('click', function () { go(1); });
   document.getElementById('stage').addEventListener('click', function () { if (!isRemote) go(1); });
@@ -885,9 +815,6 @@ window.__NOTES__ = [
     else if (e.key === 'n' || e.key === 'N') btnNotes.click();
     else if (e.key === 'r' || e.key === 'R') toggleQR();
     else if (e.key === 'f' || e.key === 'F') btnFull.click();
-    else if (e.key === 'm' || e.key === 'M') toggleMusic();
-    else if (e.key === ']') setMusic(musicOn, musicLv + 1);
-    else if (e.key === '[') setMusic(musicOn, musicLv - 1);
   });
   btnNotes.addEventListener('click', function () {
     var on = notes.hidden; notes.hidden = !on;
