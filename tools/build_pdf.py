@@ -27,10 +27,17 @@ doc = (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
        f'{re.search(r"<link rel=.stylesheet.[^>]*>", h).group(0)}'
        f'<style>{style}{EXPORT}</style></head><body>{pages}</body></html>')
 tmp = out.with_suffix('.print.html'); tmp.write_text(doc)
-subprocess.run(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-                '--headless=new', '--disable-gpu', '--no-pdf-header-footer',
-                '--virtual-time-budget=20000', f'--print-to-pdf={out}',
-                f'file://{tmp.resolve()}'], check=True,
-               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+for attempt in range(3):  # headless Chrome occasionally never returns from print-to-pdf
+    try:
+        subprocess.run(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+                        '--headless=new', '--disable-gpu', '--no-pdf-header-footer',
+                        '--virtual-time-budget=6000', f'--print-to-pdf={out}',
+                        f'file://{tmp.resolve()}'], check=True, timeout=60,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        break
+    except subprocess.TimeoutExpired:
+        print(f'print-to-pdf timed out (attempt {attempt + 1}), retrying')
+else:
+    sys.exit('print-to-pdf failed three times')
 tmp.unlink()
 print(subprocess.run(['pdfinfo', str(out)], capture_output=True, text=True).stdout.strip())
